@@ -1,0 +1,2 @@
+# APP environment variables
+export APACHE_RUN_USER=otrs
