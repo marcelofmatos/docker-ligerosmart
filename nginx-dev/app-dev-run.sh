@@ -15,7 +15,7 @@ export START_SSHD=${START_SSHD:-0}
 export DEBUG_MODE=${DEBUG_MODE:-1}
 export RESTORE_DIR=${RESTORE_DIR:-"/app-backups/restore"}
 export CODE_REPOSITORY="https://github.com/LigeroSmart/ligerosmart"
-export CODE_BRANCH=${CODE_BRANCH:-"dev-6_0"}
+export CODE_BRANCH=${CODE_BRANCH:-"rel-6_1"}
 
 echo "5" > $PROGRESSBAR_FILE
 
