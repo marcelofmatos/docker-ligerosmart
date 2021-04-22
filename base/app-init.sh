@@ -10,8 +10,8 @@ PROGRESSBAR_FILE=$INITSCREEN_DIR/progress.txt
 PACKAGE_LIST=`ls /app-packages/*.opm 2> /dev/null`
 PACKAGE_COUNT=`ls -1 /app-packages/*.opm 2> /dev/null | wc -l`
 
-MIGRATIONS_LIST=`find $APP_DIR/Kernel/Database/Migrations/ -type f 2> /dev/null | sort -n`
-MIGRATIONS_COUNT=`find $APP_DIR/Kernel/Database/Migrations/ -type f 2> /dev/null | wc -l`
+MIGRATIONS_LIST=`find $APP_DIR/scripts/database/migrations/ -type f 2> /dev/null | sort -n`
+MIGRATIONS_COUNT=`find $APP_DIR/scripts/database/migrations/ -type f 2> /dev/null | wc -l`
 
 SCRIPT_LIST=`find /app-init.d/ -type f -executable 2> /dev/null | sort -n`
 SCRIPT_COUNT=`find /app-init.d/ -type f -executable 2> /dev/null | wc -l`
