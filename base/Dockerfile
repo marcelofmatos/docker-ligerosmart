@@ -113,7 +113,7 @@ RUN cd /opt/otrs \
     && git init \
     && git config core.fileMode false \
     && git remote add origin $CODE_REPOSITORY \
-    && git pull $RELEASE_TAG \
+    && git pull origin $RELEASE_TAG \
     && mkdir -p /opt/otrs/var/article \ 
                 /opt/otrs/var/spool \
                 /opt/otrs/var/tmp \
