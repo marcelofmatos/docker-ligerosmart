@@ -1,6 +1,7 @@
 FROM ubuntu:20.04
 
 ENV RELEASE_TAG="6.1.1" \
+    CODE_REPOSITORY="https://github.com/LigeroSmart/ligerosmart" \
     DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US:en \
@@ -108,10 +109,11 @@ RUN mkdir /opt/otrs \
 WORKDIR /opt/otrs
 
 # LigeroSmart code
-RUN cd /opt \
-    && curl --silent --location https://github.com/LigeroSmart/ligerosmart/archive/${RELEASE_TAG}.tar.gz > ligerosmart.tar.gz \
-    && tar xzf ligerosmart.tar.gz --directory /opt/otrs --strip-components=1 \
-    && rm ligerosmart.tar.gz \
+RUN cd /opt/otrs \
+    && git init \
+    && git config core.fileMode false \
+    && git remote add origin $CODE_REPOSITORY \
+    && git pull $RELEASE_TAG \
     && mkdir -p /opt/otrs/var/article \ 
                 /opt/otrs/var/spool \
                 /opt/otrs/var/tmp \
