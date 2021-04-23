@@ -2,7 +2,8 @@ FROM ubuntu:20.04
 
 ARG RELEASE_TAG
 
-ENV CODE_REPOSITORY="https://github.com/LigeroSmart/ligerosmart" \
+ENV RELEASE_TAG=${RELEASE_TAG} \
+    CODE_REPOSITORY="https://github.com/LigeroSmart/ligerosmart" \
     DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US:en \
