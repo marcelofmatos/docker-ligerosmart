@@ -45,7 +45,7 @@ ENV START_WEBSERVER=1 \
     DEBUG_MODE=1 \
     PLACK_ENV=development \
     NYTPROF=start=no \
-    CODE_BRANCH="rel-6_1"
+    CODE_BRANCH=rel-6_1
 
 
 CMD /app-dev-run.sh
