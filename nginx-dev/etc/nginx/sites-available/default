@@ -16,7 +16,7 @@ server {
         #server_name localhost;
 
         root /var/www/html;
-        index index.html;
+        index index.pl index.html;
 
         location /otrs-web {
                 gzip on;
