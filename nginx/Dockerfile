@@ -23,6 +23,7 @@ RUN apt update \
 
 # include files
 COPY etc /etc
+COPY var /var
 COPY app.psgi /
 COPY app-healthcheck.sh /app-healthcheck.sh
 
