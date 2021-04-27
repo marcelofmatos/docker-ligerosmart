@@ -39,7 +39,7 @@ fi;
 
 echo "20" > $PROGRESSBAR_FILE
 let TOTAL_ITENS=$PACKAGE_COUNT+$MIGRATIONS_COUNT+$SCRIPT_COUNT
-let PROGRESS_STEP=70/$TOTAL_ITENS
+let PROGRESS_STEP=60/$TOTAL_ITENS
 
 # migrations
 otrs.Console.pl Maint::Database::Migration::TableCreate
@@ -73,7 +73,7 @@ for f in $SCRIPT_LIST; do
     echo "$0 - running $f"
     $f
     let ITEM_COUNT+=1
-    let PROGRESS=$PROGRESS_STEP*$ITEM_COUNT+30
+    let PROGRESS=$PROGRESS_STEP*$ITEM_COUNT+20
     echo $PROGRESS > $PROGRESSBAR_FILE
 done
 
