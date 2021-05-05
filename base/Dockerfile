@@ -124,6 +124,7 @@ RUN cd /opt/otrs \
 # include files
 COPY --chown=otrs:www-data var /var
 COPY etc /etc
+COPY usr /usr
 COPY app-init.d/* /app-init.d/
 COPY app-packages/* /app-packages/
 COPY app-init.sh /app-init.sh
