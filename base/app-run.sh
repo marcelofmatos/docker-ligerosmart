@@ -37,6 +37,15 @@ if [ -z $CONSOLE_COMMAND_FOUND ]; then
     exit 1
 fi;
 
+if [ $START_SSHD != '0' ]; then
+    if [ -z "$SSH_PASSWORD" ]; then
+        echo "$0 - Set SSH_PASSWORD for otrs user or put your public RSA key on /opt/otrs/.ssh/authorized_keys"
+    else
+        # set otrs password
+        echo -e "$SSH_PASSWORD\n$SSH_PASSWORD\n" | passwd otrs 2> /dev/null
+    fi;
+fi;
+
 # database connection test
 while ! su -c "otrs.Console.pl Maint::Database::Check" otrs 2> /tmp/console-maint-database-check.log; 
 do
@@ -50,15 +59,6 @@ do
     
     sleep 1;
 done
-
-if [ $START_SSHD != '0' ]; then
-    if [ -z "$SSH_PASSWORD" ]; then
-        echo "$0 - Set SSH_PASSWORD for otrs user or put your public RSA key on /opt/otrs/.ssh/authorized_keys"
-    else
-        # set otrs password
-        echo -e "$SSH_PASSWORD\n$SSH_PASSWORD\n" | passwd otrs 2> /dev/null
-    fi;
-fi;
 
 echo "100" > $PROGRESSBAR_FILE
 
