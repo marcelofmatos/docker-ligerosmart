@@ -27,6 +27,7 @@ RUN apt-get update \
         bash-completion \
         cron \
         curl \
+        dialog \
         gettext \
         git-core \
         graphviz \

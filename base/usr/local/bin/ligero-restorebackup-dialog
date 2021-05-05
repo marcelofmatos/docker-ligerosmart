@@ -1,0 +1,50 @@
+#!/bin/bash
+
+set +x
+
+SCREEN_TITLE="Restore backup"
+BACKUP_LIST=`find /app-backups/* -type d -printf "%T@ %f\n" | sort -nr | awk '{ print $2 }'` # sort by date
+
+# backup permissions
+chown -R otrs /app-backups 
+chmod -R 750 /app-backups
+
+echo $choiceArr
+BACKUP_DIR=$(dialog --backtitle "$SCREEN_TITLE" --title "Backup selection" --no-items --menu "Select one backup directory to restore" 15 60 4 $BACKUP_LIST 3>&1 1>&2 2>&3)
+
+clear
+
+[ ! -f "/app-backups/$BACKUP_DIR/DatabaseBackup.sql.gz" ] && echo "DatabaseBackup.sql.gz not found or access forbidden inside $BACKUP_DIR" && exit 1
+
+dialog --title "WARNING! Clean database?" \
+--backtitle "$SCREEN_TITLE" \
+--yesno "Are you sure you want to clean database \"$APP_Database\" and restore backup from directory \"$BACKUP_DIR\"?" 7 60
+
+clear
+
+# Detect paths
+MYSQL=$(which mysql)
+AWK=$(which awk)
+GREP=$(which grep)
+
+# clean database
+TABLES=$($MYSQL -h $APP_DatabaseHost -u $APP_DatabaseUser -p$APP_DatabasePw $APP_Database -e 'show tables' | $AWK '{ print $1}' | $GREP -v '^Tables' )
+ 
+for t in $TABLES
+do
+        echo "Deleting $t table from $APP_Database database..."
+        $MYSQL -h $APP_DatabaseHost -u $APP_DatabaseUser -p$APP_DatabasePw $APP_Database -e "SET FOREIGN_KEY_CHECKS=0; drop table $t" 2> /dev/null 1> /dev/null
+done
+
+
+# dont restore code 
+chown root:root /app-backups/$BACKUP_DIR/Config.tar.gz
+chown root:root /app-backups/$BACKUP_DIR/Application.tar.gz
+
+export RESTORE_DIR=/app-backups/$BACKUP_DIR
+su otrs -c /app-init.sh
+
+# restore owner
+chown otrs:www-data /app-backups/$BACKUP_DIR/Config.tar.gz
+chown otrs:www-data /app-backups/$BACKUP_DIR/Application.tar.gz
+
