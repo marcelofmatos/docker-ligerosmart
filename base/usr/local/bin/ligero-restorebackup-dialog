@@ -52,27 +52,31 @@ do
 done
 
 
-TMP_RESTORE_DIR=/tmp/app-restore
-
-[ -d "$TMP_RESTORE_DIR" ] && rm -rf $TMP_RESTORE_DIR
-
-mkdir $TMP_RESTORE_DIR
-
-chown otrs:www-data $TMP_RESTORE_DIR
-
-ln -sf /app-backups/$BACKUP_DIR/DatabaseBackup.sql.gz $TMP_RESTORE_DIR/DatabaseBackup.sql.gz
-
 if [ "$RESTORE_TYPE" -eq 1 ]; then
+
+    TMP_RESTORE_DIR=/tmp/app-restore
+
+    [ -d "$TMP_RESTORE_DIR" ] && rm -rf $TMP_RESTORE_DIR
+
+    mkdir $TMP_RESTORE_DIR
+    chown otrs:www-data $TMP_RESTORE_DIR
+    ln -sf /app-backups/$BACKUP_DIR/DatabaseBackup.sql.gz $TMP_RESTORE_DIR/DatabaseBackup.sql.gz
+
     export RESTORE_DIR=$TMP_RESTORE_DIR
     su otrs -c /app-init.sh
-    exit 0
+
+    if [ -f "/app-backups/$BACKUP_DIR/Application.tar.gz" ]; then
+        echo "extracting article dir from Application.tar.gz"
+        cd /opt/otrs
+        tar -xzf /app-backups/$BACKUP_DIR/Application.tar.gz ./var/article
+    fi;
+
 fi;
 
 if [ "$RESTORE_TYPE" -eq 2 ]; then
-    ln -sf /app-backups/$BACKUP_DIR/Config.tar.gz $TMP_RESTORE_DIR/Config.tar.gz
-    ln -sf /app-backups/$BACKUP_DIR/Application.tar.gz $TMP_RESTORE_DIR/Application.tar.gz
-    su otrs -c "/opt/otrs/scripts/restore.pl -b $TMP_RESTORE_DIR -d /opt/otrs"
-    exit 0
+    su otrs -c "/opt/otrs/scripts/restore.pl -b $BACKUP_DIR -d /opt/otrs"
 fi;
 
 otrs.SetPermissions.pl --web-group=www-data
+
+exit 0
