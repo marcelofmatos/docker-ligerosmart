@@ -57,6 +57,8 @@ do
     $MYSQL -h $APP_DatabaseHost -u $APP_DatabaseUser -p$APP_DatabasePw $APP_Database -e "SET FOREIGN_KEY_CHECKS=0; drop table $t" 2> /dev/null 1> /dev/null
 done
 
+# clear cache before
+su otrs -c "otrs.Console.pl Maint::Cache::Delete"
 
 if [ "$RESTORE_TYPE" -eq 1 ]; then
     su otrs -c "/opt/otrs/scripts/restore.pl -b /app-backups/$BACKUP_DIR -d /opt/otrs"
