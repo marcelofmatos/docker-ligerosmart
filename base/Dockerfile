@@ -139,6 +139,7 @@ RUN mkdir -p /var/log/supervisor \
 # default env values for services
 ENV APP_DIR=/opt/otrs \
     START_SCHEDULER=0 \
+    START_WEBSERVER=0 \
     DEBUG_MODE=0
 
 CMD /app-run.sh
