@@ -26,13 +26,13 @@ if [ -f "/app-backups/$BACKUP_DIR/Application.tar.gz" ]; then
     eval `egrep '(PRODUCT|VERSION)' /tmp/RELEASE | sed 's/ = /=/g'`
     PRODUCT_VERSION_LABEL="($PRODUCT $VERSION)"
     RESTORE_TYPE=$(dialog --backtitle "$SCREEN_TITLE" --title "Restore type" --menu "How do you want to restore backup from $BACKUP_DIR?" 15 60 4 \
-            1 "Upgrade to LigeroSmart $RELEASE_TAG" \
-            2 "Restore backup as is $PRODUCT_VERSION_LABEL" \
+            1 "Restore backup $PRODUCT_VERSION_LABEL" \
+            2 "Migrate from LigeroSmart 6.0 or ((otrs)) Community 6.0" \
     3>&1 1>&2 2>&3)
 
     [ -z "$RESTORE_TYPE" ] && exit 1
 else 
-    RESTORE_TYPE=1
+    RESTORE_TYPE=2
 fi;
 
 dialog --title "WARNING! Clean database?" \
@@ -59,6 +59,10 @@ done
 
 
 if [ "$RESTORE_TYPE" -eq 1 ]; then
+    su otrs -c "/opt/otrs/scripts/restore.pl -b /app-backups/$BACKUP_DIR -d /opt/otrs"
+fi;
+
+if [ "$RESTORE_TYPE" -eq 2 ]; then
 
     TMP_RESTORE_DIR=/tmp/app-restore
 
@@ -77,10 +81,6 @@ if [ "$RESTORE_TYPE" -eq 1 ]; then
         tar -xzf /app-backups/$BACKUP_DIR/Application.tar.gz ./var/article
     fi;
 
-fi;
-
-if [ "$RESTORE_TYPE" -eq 2 ]; then
-    su otrs -c "/opt/otrs/scripts/restore.pl -b /app-backups/$BACKUP_DIR -d /opt/otrs"
 fi;
 
 otrs.SetPermissions.pl --web-group=www-data
