@@ -70,7 +70,7 @@ fi;
 if [ "$RESTORE_TYPE" -eq 2 ]; then
     ln -sf /app-backups/$BACKUP_DIR/Config.tar.gz $TMP_RESTORE_DIR/Config.tar.gz
     ln -sf /app-backups/$BACKUP_DIR/Application.tar.gz $TMP_RESTORE_DIR/Application.tar.gz
-    su otrs -c /opt/otrs/scripts/restore.pl -b $TMP_RESTORE_DIR -d /opt/otrs
+    su otrs -c "/opt/otrs/scripts/restore.pl -b $TMP_RESTORE_DIR -d /opt/otrs"
     exit 0
 fi;
 
