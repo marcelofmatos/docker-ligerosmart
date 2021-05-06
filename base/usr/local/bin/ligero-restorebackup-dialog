@@ -35,6 +35,8 @@ dialog --title "WARNING! Clean database?" \
 --backtitle "$SCREEN_TITLE" \
 --yesno "Are you sure you want to clean database \"$APP_Database\" and restore backup from directory \"$BACKUP_DIR\"?" 7 60
 
+[ $? -eq 1 ] && exit 1
+
 clear
 
 # Detect paths
