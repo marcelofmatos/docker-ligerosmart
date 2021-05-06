@@ -129,7 +129,6 @@
         let robotBox = window['robotBox']
         let siteCheck = null;
         let progressBarCheck = null;
-        let siteCheckTimeout = 2000; // ms
         let progressBarCheckTimeout = 1000; // ms
         let redirectTimeout = 500; // ms
         let loadingSite = false;
@@ -155,10 +154,15 @@
         }
 
         progressFetch = async () => { 
+            await fetch(appSiteURL, {cache: "no-cache"})
+                .then(loadSite)
+                .catch(indeterminateProgressBar);
+
             await fetch(appStatusProgressURL, {cache: "no-cache"})
                 .then(response => response.json())
                 .then(setProgressBar)
                 .catch(indeterminateProgressBar);
+
             if(progressBar.value != 100) {
                 progressBarCheck = setTimeout(progressFetch, progressBarCheckTimeout);
                 robotBox.setAttribute('class','fadeout')
@@ -167,17 +171,9 @@
             }
         }
 
-        siteFetch = async () => { 
-            await fetch(appSiteURL, {cache: "no-cache"})
-                .then(loadSite)
-                .catch(indeterminateProgressBar)
-            siteCheck = setTimeout(siteFetch, siteCheckTimeout);
-        }
-
-        window.onload = function() {
+        window.onload = () => {
             box.setAttribute('class','fadeout');
             progressFetch();
-            siteFetch();
         }
 
     </script>
