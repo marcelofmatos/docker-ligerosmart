@@ -21,14 +21,19 @@ if [ -f "/app-backups/$BACKUP_DIR/Application.tar.gz" ]; then
     tar -xzf /app-backups/$BACKUP_DIR/Application.tar.gz ./RELEASE
     eval `egrep '(PRODUCT|VERSION)' /tmp/RELEASE | sed 's/ = /=/g'`
     PRODUCT_VERSION_LABEL="($PRODUCT $VERSION)"
+    CHOOSE_RESTORE_TYPE=1
 fi;
 
-RESTORE_TYPE=$(dialog --backtitle "$SCREEN_TITLE" --title "Restore type" --menu "How do you want to restore backup from $BACKUP_DIR?" 15 60 4 \
-        1 "Upgrade to LigeroSmart $RELEASE_TAG" \
-        2 "Restore backup as is $PRODUCT_VERSION_LABEL" \
- 3>&1 1>&2 2>&3)
+if [ $CHOOSE_RESTORE_TYPE == 1 ]; then
+    RESTORE_TYPE=$(dialog --backtitle "$SCREEN_TITLE" --title "Restore type" --menu "How do you want to restore backup from $BACKUP_DIR?" 15 60 4 \
+            1 "Upgrade to LigeroSmart $RELEASE_TAG" \
+            2 "Restore backup as is $PRODUCT_VERSION_LABEL" \
+    3>&1 1>&2 2>&3)
 
- if [ -z "$RESTORE_TYPE" ] && exit 1
+    [ -z "$RESTORE_TYPE" ] && exit 1
+else 
+    RESTORE_TYPE=1
+fi;
 
 dialog --title "WARNING! Clean database?" \
 --backtitle "$SCREEN_TITLE" \
@@ -57,7 +62,7 @@ TMP_RESTORE_DIR=/tmp/app-restore
 
 mkdir $TMP_RESTORE_DIR
 
-chown otrs:www-data /app-backups/restored
+chown otrs:www-data $TMP_RESTORE_DIR
 
 ln -sf /app-backups/$BACKUP_DIR/DatabaseBackup.sql.gz $TMP_RESTORE_DIR/DatabaseBackup.sql.gz
 
