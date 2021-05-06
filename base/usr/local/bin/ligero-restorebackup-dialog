@@ -21,10 +21,6 @@ if [ -f "/app-backups/$BACKUP_DIR/Application.tar.gz" ]; then
     tar -xzf /app-backups/$BACKUP_DIR/Application.tar.gz ./RELEASE
     eval `egrep '(PRODUCT|VERSION)' /tmp/RELEASE | sed 's/ = /=/g'`
     PRODUCT_VERSION_LABEL="($PRODUCT $VERSION)"
-    CHOOSE_RESTORE_TYPE=1
-fi;
-
-if [ $CHOOSE_RESTORE_TYPE == 1 ]; then
     RESTORE_TYPE=$(dialog --backtitle "$SCREEN_TITLE" --title "Restore type" --menu "How do you want to restore backup from $BACKUP_DIR?" 15 60 4 \
             1 "Upgrade to LigeroSmart $RELEASE_TAG" \
             2 "Restore backup as is $PRODUCT_VERSION_LABEL" \
