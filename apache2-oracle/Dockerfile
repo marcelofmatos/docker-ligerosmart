@@ -21,3 +21,6 @@ RUN sudo apt-get update \
     && rm -rf /var/lib/apt/lists/* 
 
 CMD /app-run-oracle-support.sh
+
+ENV START_WEBSERVER=1 \
+    START_SCHEDULER=1
