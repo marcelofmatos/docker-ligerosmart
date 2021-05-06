@@ -80,7 +80,7 @@ if [ "$RESTORE_TYPE" -eq 1 ]; then
 fi;
 
 if [ "$RESTORE_TYPE" -eq 2 ]; then
-    su otrs -c "/opt/otrs/scripts/restore.pl -b $BACKUP_DIR -d /opt/otrs"
+    su otrs -c "/opt/otrs/scripts/restore.pl -b /app-backups/$BACKUP_DIR -d /opt/otrs"
 fi;
 
 otrs.SetPermissions.pl --web-group=www-data
