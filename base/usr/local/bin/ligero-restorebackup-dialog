@@ -7,11 +7,13 @@ set +x
 SCREEN_TITLE="Restore backup"
 BACKUP_LIST=`find /app-backups/* -type d -printf "%T@ %f\n" | sort -nr | awk '{ print $2 }'` # sort by date
 
+[ -z "$BACKUP_LIST" ] && echo "Backup list is empty" && exit 1
+
 # backup permissions
 chown -R otrs /app-backups 
 chmod -R 750 /app-backups
 
-echo $choiceArr
+
 BACKUP_DIR=$(dialog --backtitle "$SCREEN_TITLE" --title "Backup selection" --no-items --menu "Select one backup directory to restore" 15 60 4 $BACKUP_LIST 3>&1 1>&2 2>&3)
 
 clear
