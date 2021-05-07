@@ -14,7 +14,7 @@ chown -R otrs /app-backups
 chmod -R 750 /app-backups
 
 
-BACKUP_DIR=$(dialog --backtitle "$SCREEN_TITLE" --title "Backup selection" --no-items --menu "Select one backup directory to restore" 15 60 4 $BACKUP_LIST 3>&1 1>&2 2>&3)
+BACKUP_DIR=$(dialog --backtitle "$SCREEN_TITLE" --title "Backup selection" --no-items --menu "Select one backup directory to restore" 15 70 4 $BACKUP_LIST 3>&1 1>&2 2>&3)
 
 clear
 
@@ -25,9 +25,9 @@ if [ -f "/app-backups/$BACKUP_DIR/Application.tar.gz" ]; then
     tar -xzf /app-backups/$BACKUP_DIR/Application.tar.gz ./RELEASE
     eval `egrep '(PRODUCT|VERSION)' /tmp/RELEASE | sed 's/ = /=/g'`
     PRODUCT_VERSION_LABEL="($PRODUCT $VERSION)"
-    RESTORE_TYPE=$(dialog --backtitle "$SCREEN_TITLE" --title "Restore type" --menu "How do you want to restore backup from $BACKUP_DIR?" 15 60 4 \
+    RESTORE_TYPE=$(dialog --backtitle "$SCREEN_TITLE" --title "Restore type" --menu "How do you want to restore backup from $BACKUP_DIR?" 15 70 4 \
             1 "Restore backup $PRODUCT_VERSION_LABEL" \
-            2 "Migrate from LigeroSmart 6.0 or ((otrs)) Community 6.0" \
+            2 "Migrate from ((otrs)) Community 6.0 or LigeroSmart 6.0" \
     3>&1 1>&2 2>&3)
 
     [ -z "$RESTORE_TYPE" ] && exit 1
@@ -37,7 +37,7 @@ fi;
 
 dialog --title "WARNING! Clean database?" \
 --backtitle "$SCREEN_TITLE" \
---yesno "Are you sure you want to clean database \"$APP_Database\" and restore backup from directory \"$BACKUP_DIR\"?" 7 60
+--yesno "Are you sure you want to clean database \"$APP_Database\" and restore backup from directory \"$BACKUP_DIR\"?" 7 70
 
 [ $? -eq 1 ] && exit 1
 
@@ -83,8 +83,12 @@ if [ "$RESTORE_TYPE" -eq 2 ]; then
         tar -xzf /app-backups/$BACKUP_DIR/Application.tar.gz ./var/article
     fi;
 
+    $MYSQL -h $APP_DatabaseHost -u $APP_DatabaseUser -p$APP_DatabasePw $APP_Database -e "truncate package_repository" 2> /dev/null 1> /dev/null
+
 fi;
 
 otrs.SetPermissions.pl --web-group=www-data
+
+echo "Migration done"
 
 exit 0
