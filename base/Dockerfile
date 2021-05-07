@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-ENV RELEASE_TAG=6.1.3 \
+ENV RELEASE_TAG=6.1.4 \
     CODE_REPOSITORY="https://github.com/LigeroSmart/ligerosmart" \
     DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \
