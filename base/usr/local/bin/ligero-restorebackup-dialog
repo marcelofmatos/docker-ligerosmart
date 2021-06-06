@@ -65,6 +65,9 @@ if [ "$RESTORE_TYPE" -eq 1 ]; then
 fi;
 
 if [ "$RESTORE_TYPE" -eq 3 ]; then
+    # convert MyISAM tables to InnoDB
+    otrs.Console.pl Maint::Database::MySQL::InnoDBMigration
+    # start script v5 upgrade
     /opt/otrs/scripts/DBUpdate-to-6.pl
     RESTORE_TYPE=2
 fi;
