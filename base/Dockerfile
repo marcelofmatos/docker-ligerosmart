@@ -136,6 +136,12 @@ RUN mkdir -p /var/log/supervisor \
     && rm /etc/update-motd.d/* \
     && echo "PATH=\"$PATH\"" > /etc/environment
 
+# aws cli
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+    && unzip awscliv2.zip \
+    && sudo ./aws/install \
+    && rm -rf aws/ awscliv2.zip
+    
 # default env values for services
 ENV APP_DIR=/opt/otrs \
     START_SCHEDULER=0 \
