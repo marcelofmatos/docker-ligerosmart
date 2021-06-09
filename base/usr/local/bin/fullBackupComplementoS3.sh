@@ -13,7 +13,7 @@ TMP_BKP_DIR="$BACKUP_DIR/tmp/"
 
 mkdir -p $TMP_BKP_DIR
 
-if [ ! -f "~/.aws/credentials" ]; then
+if [ ! -f ~/.aws/credentials ]; then
     echo "configure your aws cli with 'aws configure'"
     exit 1
 fi;
