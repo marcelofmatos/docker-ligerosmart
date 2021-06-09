@@ -13,6 +13,11 @@ TMP_BKP_DIR="$BACKUP_DIR/tmp/"
 
 mkdir -p $TMP_BKP_DIR
 
+if [ ! -f "~/.aws/credentials" ]; then
+    echo "configure your aws cli with 'aws configure'"
+    exit 1
+fi;
+
 # DON'T EXPORT DATA FROM THOSE TABLES
 IGNORED_TABLES_STRING=''
 for TABLE in "${EXCLUDED_TABLES[@]}"
