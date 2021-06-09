@@ -18,6 +18,11 @@ if [ ! -f ~/.aws/credentials ]; then
     exit 1
 fi;
 
+if [ -z $BUCKET ]; then
+    echo "BUCKET name is empty"
+    exit 1
+fi;
+
 # DON'T EXPORT DATA FROM THOSE TABLES
 IGNORED_TABLES_STRING=''
 for TABLE in "${EXCLUDED_TABLES[@]}"
