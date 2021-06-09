@@ -79,7 +79,12 @@ done
 echo "Last $PARTIAL_DAYS day(s) articles copied."
 
 echo "Dumping Database..."
-nice -n 10 ionice -c2 -n7 pg_dump -C -U $DatabaseUser -h $DatabaseHost $Database > $TMP_BKP_DIR/DatabaseBackup.sql
+if [ $APP_DatabaseType == 'mysql' ]; then
+    nice -n 10 ionice -c2 -n7 mysqldump -u $DatabaseUser -h $DatabaseHost -p$DatabasePw $Database > $TMP_BKP_DIR/DatabaseBackup.sql
+fi;
+if [ $APP_DatabaseType == 'postgresql' ]; then
+    nice -n 10 ionice -c2 -n7 pg_dump -C -U $DatabaseUser -h $DatabaseHost $Database > $TMP_BKP_DIR/DatabaseBackup.sql
+fi;
 echo "Done"
 
 
