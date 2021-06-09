@@ -142,9 +142,6 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     && sudo ./aws/install \
     && rm -rf aws/ awscliv2.zip
 
-RUN mkdir -p /opt/complemento/backup/temp/ \
-    && chown otrs:www-data -R /opt/complemento
-
 # default env values for services
 ENV APP_DIR=/opt/otrs \
     START_SCHEDULER=0 \
