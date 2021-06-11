@@ -1,2 +1,2 @@
-0 1 * * 0   fullBackupComplementoS3.sh
-0 1 * * 1-6 partialBackupComplementoS3.sh
+0 1 * * 0   ligero-fullbackup-S3.sh
+0 1 * * 1-6 ligero-partialbackup-S3.sh

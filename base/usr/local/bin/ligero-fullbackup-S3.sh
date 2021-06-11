@@ -7,7 +7,7 @@
 # - IONICE (liblinux-io-prio-perl no debian)
 # - awscli (installed and confgiured)
 
-. /etc/backupComplementoS3.conf
+. /etc/ligero-backup-S3.conf
 
 TMP_BKP_DIR="$BACKUP_DIR/tmp/"
 
