@@ -6,7 +6,8 @@
 
 . /etc/ligero-backup-S3.conf
 
-NAME=`(date +%Y-%m-%d_%H-%M)`
+BACKUP_PREFFIX="partialbackup_"
+NAME="${BACKUP_PREFFIX}`(date +%Y-%m-%d_%H-%M)`"
 TMP_BKP_DIR="$BACKUP_DIR/$NAME/tmp/"
 
 mkdir -p $TMP_BKP_DIR
@@ -93,8 +94,8 @@ echo "Done"
 
 sleep $DELAY
 echo "Compressing files..."
-nice -n 10 ionice -c2 -n7 tar jcpf $TMP_BKP_DIR/DatabaseBackup.tar.bz2 -C $TMP_BKP_DIR/ DatabaseBackup.sql
-nice -n 10 ionice -c2 -n7 tar jcpf $TMP_BKP_DIR/Application.tar.bz2 -C $TMP_BKP_DIR/otrs .
+nice -n 10 ionice -c2 -n7 tar jcpf /app-backups/$NAME/DatabaseBackup.sql.bz2 -C $TMP_BKP_DIR/ DatabaseBackup.sql
+nice -n 10 ionice -c2 -n7 tar jcpf /app-backups/$NAME/Application.tar.bz2 -C $TMP_BKP_DIR/otrs .
 echo "Done"
 
 #echo "Moving to destination folder..."
@@ -104,7 +105,7 @@ echo "Done"
 echo "Sending partial backup to AWS S3..."
 for PROFILE in "${AWS_PROFILES[@]}"
 do :
-    aws s3 cp $TMP_BKP_DIR/partial-otrs-backup.$NAME-$EMPRESA.tar.bz2 s3://$BUCKET/ --profile ${PROFILE}
+    aws s3 sync /app-backups/$NAME/ s3://$BUCKET/$NAME/ --profile ${PROFILE} --exclude="*" --include "*.bz2" 
 done
 
 echo "Done"
@@ -121,7 +122,7 @@ for PROFILE in "${AWS_PROFILES[@]}"
 do :
     for file in $(aws s3 ls s3://$BUCKET --profile ${PROFILE} | awk '{print $4}'); do
         # extract the date from each filename using a regex
-        if [[ $file =~ ^partial-otrs-backup.*\.([0-9]+)-([0-9]+)-([0-9]+)_.*$ ]]
+        if [[ $file =~ ^${BACKUP_PREFFIX}([0-9]+)-([0-9]+)-([0-9]+)_.*$ ]]
         then
             y="${BASH_REMATCH[1]}"
             m="${BASH_REMATCH[2]}"
@@ -132,7 +133,7 @@ do :
             if (( fileDateTime < DaysAgo ))
             then
             	echo "Removing s3://$BUCKET/$file" 
-		        aws s3 rm s3://$BUCKET/$file --profile ${PROFILE}
+		        aws s3 rm s3://$BUCKET/$file --profile ${PROFILE} --recursive
             fi
         fi
 
