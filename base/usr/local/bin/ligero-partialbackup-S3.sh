@@ -6,7 +6,8 @@
 
 . /etc/ligero-backup-S3.conf
 
-TMP_BKP_DIR="$BACKUP_DIR/tmp/"
+NAME=`(date +%Y-%m-%d_%H-%M)`
+TMP_BKP_DIR="$BACKUP_DIR/$NAME/tmp/"
 
 mkdir -p $TMP_BKP_DIR
 
@@ -92,8 +93,8 @@ echo "Done"
 
 sleep $DELAY
 echo "Compressing files..."
-NAME=`(date +%Y-%m-%d_%H-%M)`
-nice -n 10 ionice -c2 -n7 tar jcpf $TMP_BKP_DIR/partial-otrs-backup.$NAME-$EMPRESA.tar.bz2 -C $TMP_BKP_DIR/ DatabaseBackup.sql -C $TMP_BKP_DIR/otrs .
+nice -n 10 ionice -c2 -n7 tar jcpf $TMP_BKP_DIR/DatabaseBackup.tar.bz2 -C $TMP_BKP_DIR/ DatabaseBackup.sql
+nice -n 10 ionice -c2 -n7 tar jcpf $TMP_BKP_DIR/Application.tar.bz2 -C $TMP_BKP_DIR/otrs .
 echo "Done"
 
 #echo "Moving to destination folder..."
@@ -109,7 +110,7 @@ done
 echo "Done"
 
 echo "Removing temporary files..."
-rm $TMP_BKP_DIR/* -rf
+rm -rf $TMP_BKP_DIR
 echo "Done"
 
 echo "Removing Old Partial Backups from S3..."
