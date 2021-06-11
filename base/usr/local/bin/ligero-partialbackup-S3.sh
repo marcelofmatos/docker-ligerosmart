@@ -1,7 +1,4 @@
 #!/bin/bash
-# Instructions
-# - Place this script under /opt/complemento/backup
-# - it must be in this place
 # Requirements
 # - NICE
 # - IONICE (liblinux-io-prio-perl no debian)
