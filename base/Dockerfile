@@ -144,6 +144,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 
 # default env values for services
 ENV APP_DIR=/opt/otrs \
+    DATABASE_CHECK=1 \
     START_SCHEDULER=0 \
     START_WEBSERVER=0 \
     DEBUG_MODE=0

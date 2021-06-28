@@ -47,7 +47,7 @@ if [ $START_SSHD != '0' ]; then
 fi;
 
 # database connection test
-while ! su -c "otrs.Console.pl Maint::Database::Check" otrs 2> /tmp/console-maint-database-check.log; 
+while [ "$DATABASE_CHECK" == 1 ] && ! su -c "otrs.Console.pl Maint::Database::Check" otrs 2> /tmp/console-maint-database-check.log; 
 do
     egrep -o " Message: (.+)" /tmp/console-maint-database-check.log
 
