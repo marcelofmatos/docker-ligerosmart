@@ -10,9 +10,6 @@ RUN apt-get update \
 # include files
 COPY etc /etc
 
-# ssh configuration
-RUN echo "AuthorizedKeysFile .ssh/authorized_keys /etc/ssh/authorized_keys" >> /etc/ssh/sshd_config
-
 RUN mkdir /var/run/sshd
 
 # default env values for services
