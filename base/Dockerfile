@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-ENV RELEASE_TAG=6.1.7 \
+ENV RELEASE_TAG=6.1.9 \
     CODE_REPOSITORY="https://github.com/LigeroSmart/ligerosmart" \
     DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \
@@ -125,6 +125,7 @@ RUN cd /opt/otrs \
 COPY --chown=otrs:www-data var /var
 COPY etc /etc
 COPY usr /usr
+COPY root /root
 COPY app-init.d/* /app-init.d/
 COPY app-packages/* /app-packages/
 COPY app-init.sh /app-init.sh
