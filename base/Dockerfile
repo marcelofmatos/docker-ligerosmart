@@ -89,6 +89,8 @@ RUN apt update \
     && cpanm --sudo --quiet --notest HTTP::DAV \
     && cpanm --sudo --quiet --notest MIME::Words \
     && cpanm --sudo --quiet --notest Text::Markdown \
+    && cpanm --sudo --quiet --notest Redis \
+    && cpanm --sudo --quiet --notest Redis::Fast \
     && apt remove --purge -y \
             build-essential \
             libexpat1-dev \
