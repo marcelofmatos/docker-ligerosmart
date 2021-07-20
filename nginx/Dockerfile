@@ -38,6 +38,7 @@ HEALTHCHECK --interval=10s --timeout=20s --retries=2 --start-period=1m CMD /app-
 
 # default env values for services
 ENV START_WEBSERVER=1 \
+    STARMAN_WORKERS=3 \
     START_SCHEDULER=1 \
     DEBUG_MODE=0 \
     PLACK_ENV=deployment \
