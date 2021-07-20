@@ -88,7 +88,7 @@ my $App = CGI::Emulate::PSGI->handler(
 
         if ($Profile) {
             DB::finish_profile();
-            system("bash $Bin/../../scripts/HTMLProfileReportFor $ProfileSuffix");
+            system("HTMLProfileReportFor $ProfileSuffix");
             #unlink "$Bin/../../var/log/nytprof-$1.out";
         }
     },
