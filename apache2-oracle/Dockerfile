@@ -1,4 +1,4 @@
-FROM ligero/ligerosmart:apache2
+FROM ligero/ligerosmart:6.1-apache2
 
 COPY --chown=root:root etc /etc
 COPY --chown=root:root app-run-oracle-support.sh /
