@@ -65,6 +65,9 @@ fi;
 while ! su -c "otrs.Console.pl Maint::Database::Check" otrs 2> /tmp/console-maint-database-check.log; 
 do
     egrep -o " Message: (.+)" /tmp/console-maint-database-check.log
+    
+    # clear cache before init
+    otrs.Console Maint::Cache::Delete
 
     # init configuration if empty
     grep "database content is missing" /tmp/console-maint-database-check.log \
