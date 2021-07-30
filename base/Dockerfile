@@ -31,6 +31,7 @@ RUN apt-get update \
         gettext \
         git-core \
         graphviz \
+        jq \
         libarchive-zip-perl \
         libauthen-ntlm-perl \
         libauthen-sasl-perl \
