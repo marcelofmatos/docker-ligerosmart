@@ -1,5 +1,4 @@
-FROM ligero/ligerosmart:6.1-scheduler
-
+FROM ligero/ligerosmart:6.1-nginx
 COPY --chown=root:root etc /etc
 COPY --chown=root:root app-run-oracle-support.sh /
 
@@ -22,5 +21,5 @@ RUN sudo apt-get update \
 
 CMD /app-run-oracle-support.sh
 
-ENV START_WEBSERVER=0 \
+ENV START_WEBSERVER=1 \
     START_SCHEDULER=1
