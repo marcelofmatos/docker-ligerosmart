@@ -4,16 +4,15 @@ COPY --chown=root:root app-run-oracle-support.sh /
 
 RUN sudo apt-get update \
     && sudo apt-get install -y \
-       alien \
        libaio1 \
     && cd /tmp \
-    && curl --silent --remote-name --location https://addons.ligerosmart.org/packages/oracle/oracle-instantclient12.1-basic-12.1.0.2.0-1.x86_64.rpm \
-    && curl --silent --remote-name --location https://addons.ligerosmart.org/packages/oracle/oracle-instantclient12.1-devel-12.1.0.2.0-1.x86_64.rpm \
-    && curl --silent --remote-name --location https://addons.ligerosmart.org/packages/oracle/oracle-instantclient12.1-sqlplus-12.1.0.2.0-1.x86_64.rpm \
-    && alien -i oracle-instantclient12.1-basic-12.1.0.2.0-1.x86_64.rpm \
-    && alien -i oracle-instantclient12.1-sqlplus-12.1.0.2.0-1.x86_64.rpm \
-    && alien -i oracle-instantclient12.1-devel-12.1.0.2.0-1.x86_64.rpm \
-    && rm -rf /tmp/*.rpm \
+    && curl --silent --remote-name --location https://addons.ligerosmart.org/packages/oracle/oracle-instantclient12.1-basic-12.1.0.2.0-1.x86_64.deb \
+    && curl --silent --remote-name --location https://addons.ligerosmart.org/packages/oracle/oracle-instantclient12.1-devel-12.1.0.2.0-1.x86_64.deb \
+    && curl --silent --remote-name --location https://addons.ligerosmart.org/packages/oracle/oracle-instantclient12.1-sqlplus-12.1.0.2.0-1.x86_64.deb \
+    && dpkg -i oracle-instantclient12.1-basic-12.1.0.2.0-1.x86_64.deb \
+    && dpkg -i oracle-instantclient12.1-sqlplus-12.1.0.2.0-1.x86_64.deb \
+    && dpkg -i oracle-instantclient12.1-devel-12.1.0.2.0-1.x86_64.deb \
+    && rm -rf /tmp/*.deb \
     && cpanm --notest DBD::Oracle \
     && apt remove --purge alien -y \
     && apt autoremove -y \
