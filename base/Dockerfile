@@ -71,6 +71,7 @@ RUN apt-get update \
         vim \
         xterm \
         zip \
+    && apt autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* 
 

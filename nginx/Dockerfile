@@ -18,6 +18,7 @@ RUN apt update \
             build-essential \
             libexpat1-dev \
             libssl-dev \
+    && apt autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* 
 
