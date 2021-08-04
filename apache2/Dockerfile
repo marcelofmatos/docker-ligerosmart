@@ -19,6 +19,7 @@ RUN ln -s /opt/otrs/scripts/apache2-httpd.include.conf /etc/apache2/conf-availab
     && a2enmod headers perl include \
     && a2enconf otrs custom-config app-env \
     && cat /etc/apache2/app-envvars >> /etc/apache2/envvars \
+    && cpanm --sudo --quiet --notest ModPerl::Util \
     && ln -sf /dev/stdout /var/log/apache2/access.log \
     && ln -sf /dev/stderr /var/log/apache2/error.log \
     && sed -i 's/access.log combined/access.log combined env=!dontlog/' /etc/apache2/sites-available/* \

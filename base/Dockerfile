@@ -93,7 +93,6 @@ RUN apt update \
     && cpanm --sudo --quiet --notest Text::Markdown \
     && cpanm --sudo --quiet --notest Redis \
     && cpanm --sudo --quiet --notest Redis::Fast \
-    && cpanm --sudo --quiet --notest ModPerl::Util \
     && apt remove --purge -y \
             build-essential \
             libexpat1-dev \
