@@ -1,6 +1,7 @@
 [client]
 max-allowed-packet=64M
 host=database
+database=ligerosmart
 user=ligerosmart
 
 [mysqldump]
