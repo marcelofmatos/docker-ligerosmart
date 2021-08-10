@@ -1,11 +1,8 @@
 [client]
 max-allowed-packet=64M
 host=database
-database=ligerosmart
 user=ligerosmart
 
 [mysqldump]
 max-allowed-packet=64M
 column-statistics=0
-host=database
-user=ligerosmart
