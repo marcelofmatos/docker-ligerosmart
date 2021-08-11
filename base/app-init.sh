@@ -16,7 +16,7 @@ MIGRATIONS_COUNT=`find $APP_DIR/scripts/database/migrations/ -type f 2> /dev/nul
 SCRIPT_LIST=`find /app-init.d/ -type f -executable 2> /dev/null | sort -n`
 SCRIPT_COUNT=`find /app-init.d/ -type f -executable 2> /dev/null | wc -l`
 
-
+otrs.Console.pl Maint::Cache::Delete
 
 if [ -d "$RESTORE_DIR" ]; then
     #
@@ -25,8 +25,6 @@ if [ -d "$RESTORE_DIR" ]; then
     echo "$0 - Restoring backup $RESTORE_DIR"
 
     echo "10" > $PROGRESSBAR_FILE
-
-    otrs.Console.pl Maint::Cache::Delete
 
     cp Kernel/Config.pm{,_tmp}
     /opt/otrs/scripts/restore.pl -d /opt/otrs -b $RESTORE_DIR
