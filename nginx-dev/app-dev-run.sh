@@ -34,7 +34,7 @@ if [ ! -d /opt/otrs/.git ]; then
 
     echo "15" > $PROGRESSBAR_FILE
 
-    echo "$0 - downloading code from https://github.com/LigeroSmart/ligerosmart"
+    echo "$0 - downloading code from $CODE_REPOSITORY"
 
     set -x
 
