@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Ref.: https://docs.ligerosmart.org/kb/customer-portal-search-troubleshoot/
+
+while getopts ":hf" option; do
+   case $option in
+      h) # display Help
+         echo "$0 - script to clean and recreate all elasticsearch indices"
+         echo "command usage: $0 [ -h ] [ -f ]"
+         echo " -h  help"
+         echo " -f  force execution without confirmation"
+         exit;;
+      f) # confirm erase all indices
+         CONFIRM=y
+   esac
+done
+
+USER=$(whoami)
+[[ $USER != 'otrs' ]] && echo "Execute this script as otrs user" && exit 1
+
+ElasticsearchURL="http://${APP_LigeroSmart_Node}:9200"
+[[ $APP_LigeroSmart_Node == 'APP_LigeroSmart_Node' ]] && echo "APP_LigeroSmart_Node environment variable is empty" && exit 1
+
+if [ -z $CONFIRM ]; then
+    echo "CAUTION! This script will erase all indices on $ElasticsearchURL"
+    echo "Confirm? (y/n)"
+    read CONFIRM
+fi
+
+if [ "$CONFIRM" == 'y' ]; then
+    curl -X DELETE $ElasticsearchURL/_all \
+    && curl -X DELETE $ElasticsearchURL/_ingest/pipeline/attachment \
+    && otrs.Console.pl Admin::Ligero::Elasticsearch::MappingInstall --DefaultLanguage \
+    && otrs.Console.pl Maint::Ligero::Elasticsearch::PortalServiceIndexRebuild --DefaultLanguage \
+    && otrs.Console.pl Maint::Ligero::Elasticsearch::PortalFaqIndexRebuild --DefaultLanguage \
+    && otrs.Console.pl Maint::Ligero::Elasticsearch::TicketIndexRebuild --micro-sleep 500 \
+    && echo "Task complete"
+fi
