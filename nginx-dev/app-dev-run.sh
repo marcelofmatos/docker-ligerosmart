@@ -34,7 +34,7 @@ if [ ! -d /opt/otrs/.git ]; then
 
     echo "15" > $PROGRESSBAR_FILE
 
-    echo "$0 - downloading code from https://github.com/LigeroSmart/ligerosmart"
+    echo "$0 - downloading code from $CODE_REPOSITORY"
 
     set -x
 
@@ -62,7 +62,7 @@ if [ -z $CONSOLE_COMMAND_FOUND ]; then
 fi;
 
 # clear cache before init
-su -c "otrs.Console Maint::Cache::Delete" otrs
+su -c "otrs.Console.pl Maint::Cache::Delete" otrs
 
 # database connection test
 while ! su -c "otrs.Console.pl Maint::Database::Check" otrs 2> /tmp/console-maint-database-check.log; 
