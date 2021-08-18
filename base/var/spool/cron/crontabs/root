@@ -1,2 +1,2 @@
-0 1 * * 0   ligero-fullbackup-S3.sh > /dev/stdout
-0 1 * * 1-6 ligero-partialbackup-S3.sh > /dev/stdout
+0 1 * * 0   ligero-fullbackup.sh && s3-sync-backup.sh > /dev/stdout
+0 1 * * 1-6 ligero-partialbackup.sh && s3-sync-backup.sh > /dev/stdout
