@@ -1,1 +1,2 @@
+#!/bin/bash
 otrs.Console.pl Maint::Cache::Delete
