@@ -41,7 +41,7 @@ RESTORE_TYPE=$(dialog --backtitle "$SCREEN_TITLE" --title "Restore type" --menu 
 
 dialog --title "WARNING! Clean database?" \
 --backtitle "$SCREEN_TITLE" \
---yesno "Are you sure you want to clean database \"$APP_Database\" and restore backup from directory \"$BACKUP_DIR\"?" 7 70
+--yesno "Are you sure you want to clean database \"$APP_Database\" on server \"$APP_DatabaseHost\" and restore backup from directory \"$BACKUP_DIR\"?" 7 70
 
 [ $? -eq 1 ] && exit 1
 
