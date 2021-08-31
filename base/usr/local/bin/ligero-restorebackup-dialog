@@ -24,16 +24,20 @@ if [ -f "/app-backups/$BACKUP_DIR/Application.tar.gz" ]; then
     cd /tmp
     tar -xzf /app-backups/$BACKUP_DIR/Application.tar.gz ./RELEASE
     eval `egrep '(PRODUCT|VERSION)' /tmp/RELEASE | sed 's/ = /=/g'`
-    PRODUCT_VERSION_LABEL="($PRODUCT $VERSION)"
-    RESTORE_TYPE=$(dialog --backtitle "$SCREEN_TITLE" --title "Restore type" --menu "How do you want to restore backup from $BACKUP_DIR?" 15 70 4 \
-            1 "Restore backup $PRODUCT_VERSION_LABEL" \
-            2 "Migrate from ((otrs)) Community 6.0 or LigeroSmart 6.0" \
-    3>&1 1>&2 2>&3)
-
-    [ -z "$RESTORE_TYPE" ] && exit 1
-else 
-    RESTORE_TYPE=2
 fi;
+
+# Restore type dialog
+
+PRODUCT_VERSION_LABEL="($PRODUCT $VERSION)"
+RESTORE_TYPE=$(dialog --backtitle "$SCREEN_TITLE" --title "Restore type" --menu "How do you want to restore backup from $BACKUP_DIR?" 15 70 4 \
+        1 "Restore backup $PRODUCT_VERSION_LABEL" \
+        2 "Migrate from ((otrs)) Community 6.0 or LigeroSmart 6.0" \
+3>&1 1>&2 2>&3)
+
+[ -z "$RESTORE_TYPE" ] && exit 1
+
+
+# Warning dialog
 
 dialog --title "WARNING! Clean database?" \
 --backtitle "$SCREEN_TITLE" \
