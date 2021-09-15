@@ -6,3 +6,4 @@ user=ligerosmart
 [mysqldump]
 max-allowed-packet=64M
 column-statistics=0
+no-tablespaces
