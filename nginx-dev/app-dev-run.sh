@@ -27,6 +27,10 @@ INITSCREEN_PID=$!
 # set APP ENV vars
 printenv | grep APP_ | sed 's/^\(.*\)$/export \1/g' > /etc/profile.d/app-env.sh
 
+# set permissions on base dir
+chown otrs:www-data /opt/otrs
+chmod 755 /opt/otrs
+
 # code download
 
 # do nothing if .git exists
