@@ -1,0 +1,37 @@
+#!/bin/bash
+
+case "$1" in
+
+    production)
+
+        exit 0
+    ;;
+
+    test)
+
+        # disable mail outgoing
+        otrs.Console.pl Admin::Config::Update --setting-name 'SendmailModule' --value 'Kernel::System::Email::DoNotSendEmail'
+
+        # disable mail incoming
+        if [ "$APP_DatabaseType" == "mysql" ]; then
+            mysql -h $APP_DatabaseHost -u $APP_DatabaseUser -p$APP_DatabasePw $APP_Database -e "UPDATE mail_account SET valid_id=2 WHERE valid_id=1" 2> /dev/null 1> /dev/null
+        fi;
+
+        otrs.Console.pl Maint::Cache::Delete
+
+        exit 0
+
+    ;;
+    
+    *)
+    cat - <<HELP
+Change environment configuration by type.
+Usage:
+ $0 [OPTION]
+Options:
+   test
+     set environment configuration to testing propurses. This type will disable mail integrations.
+HELP
+
+    exit 1
+esac
