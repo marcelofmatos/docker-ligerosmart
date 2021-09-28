@@ -16,6 +16,24 @@ case "$1" in
         if [ "$APP_DatabaseType" == "mysql" ]; then
             mysql -h $APP_DatabaseHost -u $APP_DatabaseUser -p$APP_DatabasePw $APP_Database -e "UPDATE mail_account SET valid_id=2 WHERE valid_id=1" 2> /dev/null 1> /dev/null
         fi;
+        
+        case $LANG in
+            pt_BR)
+                NOTIFICATION_TEXT="Ambiente de homologação"
+                ;;
+            *)
+                NOTIFICATION_TEXT="Test Environment"
+                ;;
+        esac
+
+        cat >/tmp/config.yml <<EOF
+---
+Module: Kernel::Output::HTML::Notification::Generic
+Priority: Warning
+Text: $NOTIFICATION_TEXT
+EOF
+
+        otrs.Console.pl Admin::Config::Update --valid=1 --setting-name 'Frontend::NotifyModule###9000-Generic' --source-path=/tmp/config.yml
 
         otrs.Console.pl Maint::Cache::Delete
 
