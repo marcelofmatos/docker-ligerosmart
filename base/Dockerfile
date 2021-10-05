@@ -21,6 +21,11 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* 
 
+# user config
+RUN useradd -d /opt/otrs -c 'OTRS user' -g www-data -s /bin/bash otrs \
+    && usermod -a -G tty www-data \
+    && usermod -a -G tty otrs 
+    
 # Include files
 COPY --chown=otrs:www-data var /var
 COPY etc /etc
@@ -122,11 +127,6 @@ RUN apt update \
     && apt autoremove -y \
     && apt clean \
     && rm -rf /var/lib/apt/lists/* 
-
-# user config
-RUN useradd -d /opt/otrs -c 'OTRS user' -g www-data -s /bin/bash otrs \
-    && usermod -a -G tty www-data \
-    && usermod -a -G tty otrs 
 
 RUN mkdir /opt/otrs \
         /app-backups \
