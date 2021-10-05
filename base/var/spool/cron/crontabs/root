@@ -1,2 +1,3 @@
+PATH=/opt/otrs/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 0 1 * * 0   ligero-fullbackup.sh && s3-sync-backup.sh > /dev/stdout
 0 1 * * 1-6 ligero-partialbackup.sh && s3-sync-backup.sh > /dev/stdout
