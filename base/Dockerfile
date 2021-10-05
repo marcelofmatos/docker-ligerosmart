@@ -25,7 +25,7 @@ RUN apt-get update \
 RUN useradd -d /opt/otrs -c 'OTRS user' -g www-data -s /bin/bash otrs \
     && usermod -a -G tty www-data \
     && usermod -a -G tty otrs 
-    
+
 # Include files
 COPY --chown=otrs:www-data var /var
 COPY etc /etc
@@ -96,11 +96,11 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* 
 
 # MySQL client v5.7
-RUN curl https://downloads.mysql.com/archives/get/p/23/file/mysql-client_5.7.34-1ubuntu18.04_amd64.deb > /tmp/mysql-client.deb \
-    && curl https://downloads.mysql.com/archives/get/p/23/file/mysql-community-client_5.7.34-1ubuntu18.04_amd64.deb > /tmp/mysql-community-client.deb \
-    && dpkg -i /tmp/mysql-community-client.deb \
-    && dpkg -i /tmp/mysql-client.deb \
-    && rm /tmp/*.deb
+RUN curl -sLO https://downloads.mysql.com/archives/get/p/23/file/mysql-client_5.7.34-1ubuntu18.04_amd64.deb \
+    && curl -sLO https://downloads.mysql.com/archives/get/p/23/file/mysql-community-client_5.7.34-1ubuntu18.04_amd64.deb \
+    && dpkg -i mysql-community-client_5.7.34-1ubuntu18.04_amd64.deb \
+    && dpkg -i mysql-client_5.7.34-1ubuntu18.04_amd64.deb \
+    && rm *.deb
 
 # Extra perl modules
 RUN apt update \
