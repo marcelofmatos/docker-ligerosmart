@@ -128,10 +128,7 @@ RUN apt update \
     && apt clean \
     && rm -rf /var/lib/apt/lists/* 
 
-RUN mkdir /opt/otrs \
-        /app-backups \
-        /app-packages \
-        /app-init.d
+RUN mkdir /opt/otrs /app-backups 
 
 WORKDIR /opt/otrs
 
