@@ -21,6 +21,16 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* 
 
+# Include files
+COPY --chown=otrs:www-data var /var
+COPY etc /etc
+COPY usr /usr
+COPY root /root
+COPY app-init.d/* /app-init.d/
+COPY app-packages/* /app-packages/
+COPY app-init.sh /app-init.sh
+COPY app-run.sh /app-run.sh
+
 # Packages
 RUN apt-get update \
     && apt-get install -y \
@@ -32,9 +42,11 @@ RUN apt-get update \
         git-core \
         graphviz \
         jq \
+        libaio1 \
         libarchive-zip-perl \
         libauthen-ntlm-perl \
         libauthen-sasl-perl \
+        libconfig-inifiles-perl \
         libcrypt-eksblowfish-perl \
         libcrypt-ssleay-perl \
         libdate-pcalc-perl \
@@ -50,16 +62,19 @@ RUN apt-get update \
         libmail-imapclient-perl \
         libnet-dns-perl \
         libnet-ldap-perl \
+        libnuma1 \
+        libreadline5 \
+        libsnappy1v5 \
         libtemplate-perl \
         libterm-readline-perl-perl \
         libtext-csv-xs-perl \
         libtimedate-perl \
+        libtinfo5 \
+        libxml2-utils \
         libxml-libxml-perl \
         libxml-libxslt-perl \
         libxml-parser-perl \
-        libxml2-utils \
         libyaml-libyaml-perl \
-        mysql-client \
         perl \
         postgresql-client \
         rsync \
@@ -74,6 +89,13 @@ RUN apt-get update \
     && apt autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* 
+
+# MySQL client v5.7
+RUN curl https://downloads.mysql.com/archives/get/p/23/file/mysql-client_5.7.34-1ubuntu18.04_amd64.deb > /tmp/mysql-client.deb \
+    && curl https://downloads.mysql.com/archives/get/p/23/file/mysql-community-client_5.7.34-1ubuntu18.04_amd64.deb > /tmp/mysql-community-client.deb \
+    && dpkg -i /tmp/mysql-community-client.deb \
+    && dpkg -i /tmp/mysql-client.deb \
+    && rm /tmp/*.deb
 
 # Extra perl modules
 RUN apt update \
@@ -124,16 +146,6 @@ RUN cd /opt/otrs \
                 /opt/otrs/var/tmp \
     && chown otrs:www-data -R /opt/otrs \
     && chmod 775 -R /opt/otrs 
-    
-# include files
-COPY --chown=otrs:www-data var /var
-COPY etc /etc
-COPY usr /usr
-COPY root /root
-COPY app-init.d/* /app-init.d/
-COPY app-packages/* /app-packages/
-COPY app-init.sh /app-init.sh
-COPY app-run.sh /app-run.sh
 
 # post configuration
 RUN mkdir -p /var/log/supervisor \
