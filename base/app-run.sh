@@ -20,8 +20,8 @@ export RESTORE_DIR=${RESTORE_DIR:-"/app-backups/restore"}
 [ "$START_BACKEND"  == "1" ] && export START_SCHEDULER=1
 
 # set permissions on base dir
-chown otrs:www-data /opt/otrs
-chmod 755 /opt/otrs
+chown otrs:www-data /opt/otrs /app-backups
+chmod 755 /opt/otrs /app-backups
 
 echo "5" > $PROGRESSBAR_FILE
 
