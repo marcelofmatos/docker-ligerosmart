@@ -18,7 +18,8 @@ BACKUP_DIR=$(dialog --backtitle "$SCREEN_TITLE" --title "Backup selection" --no-
 
 clear
 
-[ ! -f "/app-backups/$BACKUP_DIR/DatabaseBackup.sql.gz" ] && echo "DatabaseBackup.sql.gz not found or access forbidden inside $BACKUP_DIR" && exit 1
+ls -la /app-backups/$BACKUP_DIR/DatabaseBackup.sql.*
+[ "$?" != "0" ] && echo "DatabaseBackup.sql.* not found or access forbidden inside $BACKUP_DIR" && exit 1
 
 if [ -f "/app-backups/$BACKUP_DIR/Application.tar.gz" ]; then
     cd /tmp
