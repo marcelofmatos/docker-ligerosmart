@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# jupyter kernels init
+python3 -m bash_kernel.install && iperl notebook --show-config
+
+/usr/bin/tini -- $@

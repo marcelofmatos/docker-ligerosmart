@@ -21,13 +21,13 @@ RUN apt update \
 
 COPY --chown=otrs:www-data jupyter-notebooks/ /jupyter-notebooks/
 COPY etc/ /etc/
+COPY usr/ /usr/
 
 # Add Tini. Tini operates as a process subreaper for jupyter. This prevents
 # kernel crashes.
 ENV TINI_VERSION v0.6.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
 RUN chmod +x /usr/bin/tini
-ENTRYPOINT ["/usr/bin/tini", "--"]
 
 USER otrs
 
@@ -37,3 +37,5 @@ RUN python3 -m bash_kernel.install && iperl notebook --show-config
 ENV JUPYTER_NOTEBOOK_DIR=/opt/otrs/
 
 CMD jupyter notebook --ip=0.0.0.0 --port 8888 --notebook-dir=$JUPYTER_NOTEBOOK_DIR
+
+ENTRYPOINT /usr/bin/app-entrypoint
