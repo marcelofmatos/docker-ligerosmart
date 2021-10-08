@@ -35,7 +35,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     
 EXPOSE 80
 
-HEALTHCHECK --interval=10s --timeout=20s --retries=2 --start-period=1m CMD /app-healthcheck.sh
+#HEALTHCHECK --interval=10s --timeout=20s --retries=2 --start-period=1m CMD /app-healthcheck.sh
 
 # default env values for services
 ENV START_WEBSERVER=1 \
