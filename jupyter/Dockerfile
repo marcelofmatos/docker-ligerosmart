@@ -34,6 +34,6 @@ USER otrs
 # load kernels
 RUN python3 -m bash_kernel.install && iperl notebook --show-config
 
-ENV JUPYTER_NOTEBOOK_DIR=/jupyter-notebooks/
+ENV JUPYTER_NOTEBOOK_DIR=/opt/otrs/
 
 CMD jupyter notebook --ip=0.0.0.0 --port 8888 --notebook-dir=$JUPYTER_NOTEBOOK_DIR
