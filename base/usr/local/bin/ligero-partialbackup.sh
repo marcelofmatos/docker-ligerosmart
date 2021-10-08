@@ -100,6 +100,9 @@ echo "Done"
 #cp $TMP_BKP_DIR/partial-otrs-backup.$NAME-$EMPRESA.tar.bz2 $DESTINATION_FOLDER
 #echo "Done"
 
+#set permissions to otrs user
+chow otrs:www-data -R /app-backups/$NAME
+
 echo "Removing temporary files..."
 rm -rf $TMP_BKP_DIR
 echo "Done"
