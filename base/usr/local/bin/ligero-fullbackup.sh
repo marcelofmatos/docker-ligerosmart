@@ -8,6 +8,7 @@
 BACKUP_PREFFIX="fullbackup_"
 NAME="${BACKUP_PREFFIX}`(date +%Y-%m-%d_%H-%M)`"
 TMP_BKP_DIR="$BACKUP_DIR/$NAME/tmp/"
+CompressType=${CompressType:-gzip}
 
 mkdir -p $TMP_BKP_DIR
 
@@ -43,8 +44,16 @@ echo "Done"
 
 sleep $DELAY
 echo "Compressing files..."
-nice -n 10 ionice -c2 -n7 tar jcpf /app-backups/$NAME/DatabaseBackup.sql.bz2 -C $TMP_BKP_DIR/ DatabaseBackup.sql
-nice -n 10 ionice -c2 -n7 tar jcpf /app-backups/$NAME/Application.tar.bz2 -C /opt/otrs .
+case $CompressType in
+    bz2)
+        nice -n 10 ionice -c2 -n7 tar jcpf /app-backups/$NAME/DatabaseBackup.sql.bz2 -C $TMP_BKP_DIR/ DatabaseBackup.sql
+        nice -n 10 ionice -c2 -n7 tar jcpf /app-backups/$NAME/Application.tar.bz2 -C /opt/otrs .
+        ;;
+    gzip)
+        nice -n 10 ionice -c2 -n7 tar zcpf /app-backups/$NAME/DatabaseBackup.sql.gz -C $TMP_BKP_DIR/ DatabaseBackup.sql
+        nice -n 10 ionice -c2 -n7 tar zcpf /app-backups/$NAME/Application.tar.gz -C /opt/otrs .
+        ;;
+esac
 echo "Done"
 
 #echo "Moving to destination folder..."
