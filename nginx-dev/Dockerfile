@@ -25,6 +25,7 @@ COPY etc /etc
 COPY app.psgi /
 COPY app-init.d /app-init.d
 COPY app-dev-run.sh /app-dev-run.sh
+COPY app-healthcheck.sh /app-healthcheck.sh
 
 
 # post configuration
