@@ -1,5 +1,6 @@
 PATH=/opt/otrs/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 BASH_ENV=/etc/profile.d/app-env.sh
 MAILTO=""
-0 1 * * 0   /usr/local/bin/ligero-fullbackup.sh && /usr/local/bin/s3-sync-backup.sh > /dev/stdout
-0 1 * * 1-6 /usr/local/bin/ligero-partialbackup.sh && /usr/local/bin/s3-sync-backup.sh > /dev/stdout
+0 1 * * 0   /usr/local/bin/ligero-fullbackup.sh
+0 1 * * 1-6 /usr/local/bin/ligero-partialbackup.sh
+0 2 * * *   /usr/local/bin/s3-sync-backup.sh
