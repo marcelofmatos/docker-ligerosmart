@@ -25,9 +25,14 @@ do :
    IGNORED_YEARS_STRING+=" --exclude=${PASTA_OTRS}/var/article/${YEAR} "
 done
 
+IGNORED_PATHS_STRING=''
+for EXCLUDED_PATH in "${EXCLUDED_BACKUP_PATHS[@]}"
+do :
+   IGNORED_PATHS_STRING+=" --exclude=${EXCLUDED_PATH} "
+done
+
 START=`(date +%H:%M:%S\ %Y-%m-%d)`
 echo "Backup started at $START"
-echo "Cleaning temporary backup directory..."
 
 rm $TMP_BKP_DIR/* -rf
 
@@ -43,17 +48,12 @@ echo "Done"
 mkdir $TMP_BKP_DIR/otrs/var
 
 sleep $DELAY
-echo "Cleaning Cache Files before Copying them..."
-su -c "${DELETE_CACHE}" -s /bin/bash otrs
-
-sleep $DELAY
 echo "Copying important var folders..."
 cp /opt/otrs/var/log $TMP_BKP_DIR/otrs/var -R
 cp /opt/otrs/var/run $TMP_BKP_DIR/otrs/var -R
 cp /opt/otrs/var/sessions $TMP_BKP_DIR/otrs/var -R
 cp /opt/otrs/var/spool $TMP_BKP_DIR/otrs/var -R
 cp /opt/otrs/var/stats $TMP_BKP_DIR/otrs/var -R
-cp /opt/otrs/var/tmp $TMP_BKP_DIR/otrs/var -R
 echo "Done"
 
 sleep $DELAY
@@ -87,21 +87,19 @@ echo "Compressing files..."
 case $CompressType in
     bz2)
         nice -n 10 ionice -c2 -n7 tar jcpf /app-backups/$NAME/DatabaseBackup.sql.bz2 -C $TMP_BKP_DIR/ DatabaseBackup.sql
-        nice -n 10 ionice -c2 -n7 tar jcpf /app-backups/$NAME/Application.tar.bz2 -C $TMP_BKP_DIR/otrs .
+        nice -n 10 ionice -c2 -n7 tar jcpf /app-backups/$NAME/Application.tar.bz2 -C $TMP_BKP_DIR/otrs $IGNORED_PATHS_STRING .
         ;;
     gzip)
         nice -n 10 ionice -c2 -n7 tar zcpf /app-backups/$NAME/DatabaseBackup.sql.gz -C $TMP_BKP_DIR/ DatabaseBackup.sql
-        nice -n 10 ionice -c2 -n7 tar zcpf /app-backups/$NAME/Application.tar.gz -C $TMP_BKP_DIR/otrs .
+        nice -n 10 ionice -c2 -n7 tar zcpf /app-backups/$NAME/Application.tar.gz -C $TMP_BKP_DIR/otrs $IGNORED_PATHS_STRING .
         ;;
 esac
 echo "Done"
 
-#echo "Moving to destination folder..."
-#cp $TMP_BKP_DIR/partial-otrs-backup.$NAME-$EMPRESA.tar.bz2 $DESTINATION_FOLDER
-#echo "Done"
-
 #set permissions to otrs user
-chow otrs:www-data -R /app-backups/$NAME
+if [ "$USER" == "root" ]; then
+    chown otrs:www-data -R /app-backups/$NAME
+fi
 
 echo "Removing temporary files..."
 rm -rf $TMP_BKP_DIR
