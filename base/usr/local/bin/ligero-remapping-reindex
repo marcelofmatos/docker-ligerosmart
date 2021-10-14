@@ -21,6 +21,10 @@ USER=$(whoami)
 ElasticsearchURL="http://${APP_LigeroSmart_Node}:9200"
 [[ $APP_LigeroSmart_Node == 'APP_LigeroSmart_Node' ]] && echo "APP_LigeroSmart_Node environment variable is empty" && exit 1
 
+# show indices list
+echo "Indices:"
+curl "${ElasticsearchURL}/_cat/indices"
+
 if [ -z $CONFIRM ]; then
     echo "CAUTION! This script will erase all indices on $ElasticsearchURL"
     echo "Confirm? (y/n)"
