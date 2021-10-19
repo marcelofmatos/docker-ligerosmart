@@ -59,6 +59,9 @@ do
     && [ $START_WEBSERVER == '1' ] \
     && su -c "/app-init.sh" otrs \
     && otrs.SetPermissions.pl
+
+    # apply migrations on run
+    otrs.Console.pl Maint::Database::Migration::Apply
     
     sleep 1;
 done
