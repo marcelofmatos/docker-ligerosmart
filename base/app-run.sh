@@ -20,8 +20,8 @@ export RESTORE_DIR=${RESTORE_DIR:-"/app-backups/restore"}
 [ "$START_BACKEND"  == "1" ] && export START_SCHEDULER=1
 
 # set permissions on base dir
-chown otrs:www-data /opt/otrs /app-backups
-chmod 755 /opt/otrs /app-backups
+chown otrs:www-data $APP_DIR /app-backups
+chmod 755 $APP_DIR /app-backups
 
 echo "5" > $PROGRESSBAR_FILE
 
@@ -42,7 +42,7 @@ fi;
 
 if [ $START_SSHD != '0' ]; then
     if [ -z "$SSH_PASSWORD" ]; then
-        echo "$0 - Set SSH_PASSWORD for otrs user or put your public RSA key on /opt/otrs/.ssh/authorized_keys"
+        echo "$0 - Set SSH_PASSWORD for otrs user or put your public RSA key on $APP_DIR/.ssh/authorized_keys"
     else
         # set otrs password
         echo -e "$SSH_PASSWORD\n$SSH_PASSWORD\n" | passwd otrs 2> /dev/null
@@ -61,7 +61,7 @@ do
     && otrs.SetPermissions.pl
 
     # apply migrations on run
-    if [ -d "/opt/otrs/scripts/database/migrations" ]; then
+    if [ -d "$APP_DIR/scripts/database/migrations" ]; then
         otrs.Console.pl Maint::Database::Migration::Apply
     fi;
     
