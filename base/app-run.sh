@@ -61,7 +61,9 @@ do
     && otrs.SetPermissions.pl
 
     # apply migrations on run
-    otrs.Console.pl Maint::Database::Migration::Apply
+    if [ -d "/opt/otrs/scripts/database/migrations" ]; then
+        otrs.Console.pl Maint::Database::Migration::Apply
+    fi;
     
     sleep 1;
 done
