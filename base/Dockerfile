@@ -6,7 +6,14 @@ ENV RELEASE_TAG=6.1.9 \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US:en \
     LC_ALL=en_US.UTF-8 \
-    PATH=/opt/otrs/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    APP_DIR=/opt/otrs \
+    APP_USER=otrs \
+    APP_GROUP=www-data \
+    DATABASE_CHECK=1 \
+    START_SCHEDULER=0 \
+    START_WEBSERVER=0 \
+    DEBUG_MODE=0 \
+    PATH=${APP_DIR}/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 SHELL ["/bin/bash", "-c"]
 
@@ -22,12 +29,12 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* 
 
 # user config
-RUN useradd -d /opt/otrs -c 'OTRS user' -g www-data -s /bin/bash otrs \
-    && usermod -a -G tty www-data \
-    && usermod -a -G tty otrs 
+RUN useradd -d ${APP_DIR} -c 'OTRS user' -g ${APP_GROUP} -s /bin/bash ${APP_USER} \
+    && usermod -a -G tty ${APP_GROUP} \
+    && usermod -a -G tty ${APP_USER} 
 
 # Include files
-COPY --chown=otrs:www-data var /var
+COPY --chown=${APP_USER}:${APP_GROUP} var /var
 COPY etc /etc
 COPY usr /usr
 COPY root /root
@@ -128,21 +135,22 @@ RUN apt update \
     && apt clean \
     && rm -rf /var/lib/apt/lists/* 
 
-RUN mkdir /opt/otrs /app-backups 
+RUN mkdir ${APP_DIR} /app-backups 
 
-WORKDIR /opt/otrs
+WORKDIR ${APP_DIR}
 
 # LigeroSmart code
-RUN cd /opt/otrs \
+RUN cd ${APP_DIR} \
     && git init \
     && git config core.fileMode false \
-    && git remote add origin $CODE_REPOSITORY \
-    && git pull origin $RELEASE_TAG \
-    && mkdir -p /opt/otrs/var/article \ 
-                /opt/otrs/var/spool \
-                /opt/otrs/var/tmp \
-    && chown otrs:www-data -R /opt/otrs \
-    && chmod 775 -R /opt/otrs 
+    && git config user.email ${APP_USER}@localhost \
+    && git remote add origin ${CODE_REPOSITORY} \
+    && git pull origin ${RELEASE_TAG} \
+    && mkdir -p ${APP_DIR}/var/article \ 
+                ${APP_DIR}/var/spool \
+                ${APP_DIR}/var/tmp \
+    && chown otrs:www-data -R ${APP_DIR} \
+    && chmod 775 -R ${APP_DIR} 
 
 # post configuration
 RUN mkdir -p /var/log/supervisor \
@@ -155,12 +163,5 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     && unzip awscliv2.zip \
     && sudo ./aws/install \
     && rm -rf aws/ awscliv2.zip
-
-# default env values for services
-ENV APP_DIR=/opt/otrs \
-    DATABASE_CHECK=1 \
-    START_SCHEDULER=0 \
-    START_WEBSERVER=0 \
-    DEBUG_MODE=0
 
 CMD /app-run.sh
