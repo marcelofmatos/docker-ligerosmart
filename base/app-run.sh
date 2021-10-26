@@ -59,14 +59,13 @@ do
     && [ $START_WEBSERVER == '1' ] \
     && su -c "/app-init.sh" otrs \
     && otrs.SetPermissions.pl
-
-    # apply migrations on run
-    if [ -d "$APP_DIR/scripts/database/migrations" ]; then
-        otrs.Console.pl Maint::Database::Migration::Apply
-    fi;
     
     sleep 1;
 done
+
+if [ "$MIGRATIONS_CHECK" == 1 ] && [ -d "$APP_DIR/scripts/database/migrations" ]; then
+    otrs.Console.pl Maint::Database::Migration::Apply
+fi
 
 echo "100" > $PROGRESSBAR_FILE
 
