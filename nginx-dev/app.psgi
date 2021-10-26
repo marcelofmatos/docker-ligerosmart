@@ -113,5 +113,9 @@ builder {
         path        => $StaticPath,
         root        => "$Bin/../../var/httpd/htdocs",
         pass_trough => 0;
+    enable "Plack::Middleware::ErrorDocument",
+        403 => '/var/www/html/403.html',
+        500 => '/var/www/html/50x.html',
+        502 => '/var/www/html/50x.html';
     $App;
 }
