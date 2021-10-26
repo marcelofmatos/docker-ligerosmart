@@ -12,8 +12,9 @@ ENV RELEASE_TAG=6.1.9 \
     DATABASE_CHECK=1 \
     START_SCHEDULER=0 \
     START_WEBSERVER=0 \
-    DEBUG_MODE=0 \
-    PATH=${APP_DIR}/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    DEBUG_MODE=0 
+
+ENV PATH=${APP_DIR}/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 SHELL ["/bin/bash", "-c"]
 
