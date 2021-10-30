@@ -64,7 +64,7 @@ do
 done
 
 if [ "$MIGRATIONS_CHECK" == 1 ] && [ -d "$APP_DIR/scripts/database/migrations" ]; then
-    otrs.Console.pl Maint::Database::Migration::Apply
+    su -c "otrs.Console.pl Maint::Database::Migration::Apply" -s /bin/bash $APP_USER
 fi
 
 echo "100" > $PROGRESSBAR_FILE
