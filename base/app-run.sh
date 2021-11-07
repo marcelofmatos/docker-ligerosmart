@@ -67,6 +67,11 @@ if [ "$MIGRATIONS_CHECK" == 1 ] && [ -d "$APP_DIR/scripts/database/migrations" ]
     su -c "otrs.Console.pl Maint::Database::Migration::Apply" -s /bin/bash $APP_USER
 fi
 
+if [ "$START_SCHEDULER" == '1' ] && [ -f /var/spool/cron/crontabs/root ]; then
+    # start crontab root
+    crontab root /var/spool/cron/crontabs/root
+fi;
+
 echo "100" > $PROGRESSBAR_FILE
 
 # stop init-screen
