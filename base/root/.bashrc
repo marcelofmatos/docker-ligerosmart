@@ -1,2 +1,2 @@
 . /etc/profile.d/app-env.sh
-su $APP_USER
+[[ "$SUDO_USER" != "$APP_USER" ]] && su $APP_USER
