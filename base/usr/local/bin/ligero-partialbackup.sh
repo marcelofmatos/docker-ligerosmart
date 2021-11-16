@@ -73,27 +73,24 @@ do
 done
 echo "Last $PARTIAL_DAYS day(s) articles copied."
 
-echo "Dumping Database..."
-if [[ $APP_DatabaseType == 'mysql' ]]; then
-    nice -n 10 ionice -c2 -n7 mysqldump -u $DatabaseUser -h $DatabaseHost -p$DatabasePw $Database > $TMP_BKP_DIR/DatabaseBackup.sql
-fi;
-if [[ $APP_DatabaseType == 'postgresql' ]]; then
-    nice -n 10 ionice -c2 -n7 pg_dump -C -U $DatabaseUser -h $DatabaseHost $Database > $TMP_BKP_DIR/DatabaseBackup.sql
-fi;
-echo "Done"
-
 sleep $DELAY
-echo "Compressing files..."
+
+echo "Dumping Database and compressing files..."
 case $CompressType in
     bz2)
-        nice -n 10 ionice -c2 -n7 tar jcpf /app-backups/$NAME/DatabaseBackup.sql.bz2 -C $TMP_BKP_DIR/ DatabaseBackup.sql
+        #nice -n 10 ionice -c2 -n7 tar jcpf /app-backups/$NAME/DatabaseBackup.sql.bz2 -C $TMP_BKP_DIR/ DatabaseBackup.sql
+        nice -n 10 ionice -c2 -n7 /opt/otrs/scripts/backup.pl -t dbonly -d /tmp -c bzip2
+        mv /tmp/$YEAR-$MONTH-*/DatabaseBackup* /app-backups/$NAME
         nice -n 10 ionice -c2 -n7 tar jcpf /app-backups/$NAME/Application.tar.bz2 -C $TMP_BKP_DIR/otrs $IGNORED_PATHS_STRING .
         ;;
     gzip)
-        nice -n 10 ionice -c2 -n7 tar zcpf /app-backups/$NAME/DatabaseBackup.sql.gz -C $TMP_BKP_DIR/ DatabaseBackup.sql
+        #nice -n 10 ionice -c2 -n7 tar zcpf /app-backups/$NAME/DatabaseBackup.sql.gz -C $TMP_BKP_DIR/ DatabaseBackup.sql
+        nice -n 10 ionice -c2 -n7 /opt/otrs/scripts/backup.pl -t dbonly -d /tmp -c gzip
+        mv /tmp/$YEAR-$MONTH-*/DatabaseBackup* /app-backups/$NAME
         nice -n 10 ionice -c2 -n7 tar zcpf /app-backups/$NAME/Application.tar.gz -C $TMP_BKP_DIR/otrs $IGNORED_PATHS_STRING .
         ;;
 esac
+
 echo "Done"
 
 #set permissions to otrs user
