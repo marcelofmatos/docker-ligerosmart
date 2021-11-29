@@ -79,6 +79,7 @@ RUN apt-get update \
         libnuma1 \
         libreadline5 \
         libsnappy1v5 \
+        libswitch-perl \
         libtemplate-perl \
         libterm-readline-perl-perl \
         libtext-csv-xs-perl \
