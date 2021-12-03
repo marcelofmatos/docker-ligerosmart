@@ -63,7 +63,7 @@ do
     sleep 1;
 done
 
-if [ "$MIGRATIONS_CHECK" == 1 ] && [ -d "$APP_DIR/scripts/database/migrations" ]; then
+if [ "$MIGRATIONS_CHECK" == 1 ] && [ -d "$APP_DIR/scripts/database/migrations" ] && [ "$START_WEBSERVER" == '1' ] && [ "$APP_NodeID" == '1' ]; then
     su -c "otrs.Console.pl Maint::Database::Migration::Apply" -s /bin/bash $APP_USER
 fi
 
