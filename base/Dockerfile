@@ -148,6 +148,7 @@ RUN cd ${APP_DIR} \
     && git config core.fileMode false \
     && git config user.email ${APP_USER}@localhost \
     && git remote add origin ${CODE_REPOSITORY} \
+    && git checkout -b main \
     && git pull origin ${RELEASE_TAG} \
     && mkdir -p ${APP_DIR}/var/article \ 
                 ${APP_DIR}/var/spool \

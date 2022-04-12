@@ -72,6 +72,9 @@ if [ "$START_SCHEDULER" == '1' ] && [ -f /var/spool/cron/crontabs/root ]; then
     crontab root /var/spool/cron/crontabs/root
 fi;
 
+# change old default branch name
+git branch -m master main
+
 echo "100" > $PROGRESSBAR_FILE
 
 # stop init-screen
