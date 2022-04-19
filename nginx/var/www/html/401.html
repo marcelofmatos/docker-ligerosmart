@@ -144,8 +144,11 @@
 
         <script>
             window.onload = () => {
-                window.box.classList.add('fadeout')
+                window.box.setAttribute('class','fadeout');
             }
+            let checkInterval = setInterval(() => {
+                fetch(window.location.href).then(a=>{ if(a.status==200) window.location.reload() })
+            }, 10000)
         </script>
     </body>
 </html>
