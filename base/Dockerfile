@@ -146,7 +146,8 @@ WORKDIR ${APP_DIR}
 RUN cd ${APP_DIR} \
     && git init \
     && git config core.fileMode false \
-    && git config user.email ${APP_USER}@localhost \
+    && git config --global --add safe.directory /opt/otrs \
+    && git config --global user.email ${APP_USER}@localhost \
     && git remote add origin ${CODE_REPOSITORY} \
     && git checkout -b main \
     && git pull origin ${RELEASE_TAG} \
