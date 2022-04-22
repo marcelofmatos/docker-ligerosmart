@@ -73,7 +73,9 @@ if [ "$START_SCHEDULER" == '1' ] && [ -f /var/spool/cron/crontabs/root ]; then
 fi;
 
 # change old default branch name
-git branch -m master main
+if git branch | grep -w master > /dev/null; then
+    git branch -m master main > /dev/null
+fi;
 
 echo "100" > $PROGRESSBAR_FILE
 
