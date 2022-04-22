@@ -73,7 +73,8 @@ if [ "$START_SCHEDULER" == '1' ] && [ -f /var/spool/cron/crontabs/root ]; then
 fi;
 
 # change old default branch name
-if git branch | grep -w master > /dev/null; then
+git branch | grep -w master > /dev/null
+if [ $? -eq 0 ]; then
     git branch -m master main > /dev/null
 fi;
 
