@@ -1,8 +1,8 @@
 FROM ligero/ligerosmart:base
 
 # Packages
-RUN apt-get update \
-    && apt-get install -y \
+RUN apt update \
+    && apt install -y \
         nginx \
         build-essential \
         libexpat1-dev \
