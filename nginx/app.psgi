@@ -55,6 +55,11 @@ my $App = CGI::Emulate::PSGI->handler(
         # Populate SCRIPT_NAME as OTRS needs it in some places.
         $ENV{SCRIPT_NAME} = $ENV{PATH_INFO};
 
+        # set RemoteAddr behind proxy
+        if ( $ENV{HTTP_X_FORWARDED_FOR} ) {
+            $ENV{REMOTE_ADDR} = $ENV{HTTP_X_FORWARDED_FOR};
+        }
+
         my ( $HandleScript ) = $ENV{PATH_INFO} =~ m{/([A-Za-z\-_]+\.pl)};    ## no critic
  
         # Fallback to agent login if we could not determine handle...i
