@@ -59,6 +59,10 @@ my $App = CGI::Emulate::PSGI->handler(
         if ( $ENV{HTTP_X_FORWARDED_FOR} ) {
             $ENV{REMOTE_ADDR} = $ENV{HTTP_X_FORWARDED_FOR};
         }
+        
+        if ( $ENV{HTTP_X_REAL_IP} ) {
+            $ENV{REMOTE_ADDR} = $ENV{HTTP_X_REAL_IP};
+        }
 
         my ( $HandleScript ) = $ENV{PATH_INFO} =~ m{/([A-Za-z\-_]+\.pl)};    ## no critic
  
