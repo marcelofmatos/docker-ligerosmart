@@ -56,12 +56,13 @@ my $App = CGI::Emulate::PSGI->handler(
         $ENV{SCRIPT_NAME} = $ENV{PATH_INFO};
 
         # set RemoteAddr behind proxy
-        if ( $ENV{HTTP_X_FORWARDED_FOR} ) {
-            $ENV{REMOTE_ADDR} = $ENV{HTTP_X_FORWARDED_FOR};
-        }
-        
         if ( $ENV{HTTP_X_REAL_IP} ) {
             $ENV{REMOTE_ADDR} = $ENV{HTTP_X_REAL_IP};
+        }
+
+        if ( $ENV{HTTP_X_FORWARDED_FOR} ) {
+            $ENV{REMOTE_ADDR} = $ENV{HTTP_X_FORWARDED_FOR};
+            #($ENV{REMOTE_ADDR}) = split /\s*,/, $ENV{HTTP_X_FORWARDED_FOR};
         }
 
         my ( $HandleScript ) = $ENV{PATH_INFO} =~ m{/([A-Za-z\-_]+\.pl)};    ## no critic
