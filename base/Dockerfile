@@ -103,6 +103,7 @@ RUN apt-get update \
         zip \
     && apt autoremove \
     && apt-get clean \
+    && apt-get --purge remove sendmail-base sendmail-cf sendmail-doc -y \
     && rm -rf /var/lib/apt/lists/* 
 
 # MySQL client v5.7
