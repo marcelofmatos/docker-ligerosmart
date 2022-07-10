@@ -14,13 +14,14 @@ export START_SCHEDULER=${START_SCHEDULER:-1}
 export START_SSHD=${START_SSHD:-0}
 export DEBUG_MODE=${DEBUG_MODE:-0}
 export RESTORE_DIR=${RESTORE_DIR:-"/app-backups/restore"}
+export APP_USER=${APP_USER:-otrs}
 
 # legacy variables
 [ "$START_FRONTEND" == "1" ] && export START_WEBSERVER=1
 [ "$START_BACKEND"  == "1" ] && export START_SCHEDULER=1
 
 # set permissions on base dir
-chown otrs:www-data $APP_DIR /app-backups
+chown $APP_USER:www-data $APP_DIR /app-backups
 chmod 755 $APP_DIR /app-backups
 
 echo "5" > $PROGRESSBAR_FILE
@@ -42,22 +43,22 @@ fi;
 
 if [ $START_SSHD != '0' ]; then
     if [ -z "$SSH_PASSWORD" ]; then
-        echo "$0 - Set SSH_PASSWORD for otrs user or put your public RSA key on $APP_DIR/.ssh/authorized_keys"
+        echo "$0 - Set SSH_PASSWORD for $APP_USER user or put your public RSA key on $APP_DIR/.ssh/authorized_keys"
     else
-        # set otrs password
-        echo -e "$SSH_PASSWORD\n$SSH_PASSWORD\n" | passwd otrs 2> /dev/null
+        # set $APP_USER password
+        echo -e "$SSH_PASSWORD\n$SSH_PASSWORD\n" | passwd $APP_USER 2> /dev/null
     fi;
 fi;
 
 # database connection test
-while [ "$DATABASE_CHECK" == 1 ] && ! su -c "otrs.Console.pl Maint::Database::Check" otrs 2> /tmp/console-maint-database-check.log; 
+while [ "$DATABASE_CHECK" == 1 ] && ! su -c "otrs.Console.pl Maint::Database::Check" $APP_USER 2> /tmp/console-maint-database-check.log; 
 do
     egrep -o " Message: (.+)" /tmp/console-maint-database-check.log
 
     # init configuration if empty
     grep "database content is missing" /tmp/console-maint-database-check.log \
     && [ $START_WEBSERVER == '1' ] \
-    && su -c "/app-init.sh" otrs \
+    && su -c "/app-init.sh" $APP_USER \
     && otrs.SetPermissions.pl
     
     sleep 1;
@@ -72,7 +73,7 @@ if [ "$START_SCHEDULER" == '1' ] && [ -f /var/spool/cron/crontabs/root ]; then
     crontab root /var/spool/cron/crontabs/root
 fi;
 
-su -c "otrs.Console.pl Maint::Config::Rebuild" otrs
+su -c "otrs.Console.pl Maint::Config::Rebuild" $APP_USER
 
 # change old default branch name
 git branch | grep -w master > /dev/null
