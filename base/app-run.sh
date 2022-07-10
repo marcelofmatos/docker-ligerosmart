@@ -72,7 +72,7 @@ if [ "$START_SCHEDULER" == '1' ] && [ -f /var/spool/cron/crontabs/root ]; then
     crontab root /var/spool/cron/crontabs/root
 fi;
 
-otrs.Console.pl Maint::Config::Rebuild
+su -c "otrs.Console.pl Maint::Config::Rebuild" otrs
 
 # change old default branch name
 git branch | grep -w master > /dev/null
