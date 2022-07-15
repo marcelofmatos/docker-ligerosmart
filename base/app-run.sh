@@ -74,7 +74,7 @@ if [ "$START_SCHEDULER" == '1' ] && [ -f /var/spool/cron/crontabs/root ]; then
 fi;
 
 if [ "$START_WEBSERVER" == '1' ] || [ "$START_SCHEDULER" == '1' ]; then
-    su -c "otrs.Console.pl Maint::Config::Rebuild" $APP_USER
+    su -c "otrs.Console.pl Maint::Config::Rebuild" $APP_USER &
 fi;
 
 # change old default branch name
