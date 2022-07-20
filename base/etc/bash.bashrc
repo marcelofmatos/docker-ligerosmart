@@ -27,3 +27,9 @@ parse_git_branch() {
 }
 
 export PS1='\u@$APP_FQDN \[\e[32m\]\w \[\e[91m\]$(parse_git_branch)\[\e[00m\]\$ '
+
+# Long format list
+alias ll="ls -la"
+
+# Print my public IP
+alias myip='curl ipinfo.io'
