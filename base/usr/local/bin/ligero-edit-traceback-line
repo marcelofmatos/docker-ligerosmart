@@ -1,0 +1,11 @@
+#!/bin/bash
+
+TRACEBACK_LINE=${@##*( )}
+
+FUNCTION_NAME=$(echo $TRACEBACK_LINE | awk '{ print $2 }' | sed 's|::|/|g')
+LINE_NUMBER=$(echo $TRACEBACK_LINE | awk '{ print $4 }')
+
+FILE_PATH="$( dirname $FUNCTION_NAME ).pm"
+PARAMS="$FILE_PATH +$LINE_NUMBER"
+
+exec vim $PARAMS
