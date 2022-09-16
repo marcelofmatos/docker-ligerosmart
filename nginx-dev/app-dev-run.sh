@@ -47,6 +47,7 @@ if [ ! -d /opt/otrs/.git ]; then
     # ignore modifications by otrs.SetPermissions.pl 
     git config core.fileMode false
     git remote add origin $CODE_REPOSITORY
+    git remote update origin --prune
     git fetch origin $CODE_BRANCH
     git checkout $CODE_BRANCH --force
 
