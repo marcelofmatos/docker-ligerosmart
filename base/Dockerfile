@@ -117,6 +117,7 @@ RUN curl -sLO https://downloads.mysql.com/archives/get/p/23/file/mysql-client_5.
 RUN apt update \
     && apt install -y \
             build-essential \
+            libdb-dev \
             libexpat1-dev \
             libssl-dev \
     && curl --silent -L https://cpanmin.us | perl - --sudo App::cpanminus \
@@ -131,8 +132,13 @@ RUN apt update \
     && cpanm --sudo --quiet --notest Text::Markdown \
     && cpanm --sudo --quiet --notest Redis \
     && cpanm --sudo --quiet --notest Redis::Fast \
+    && cpanm --sudo --quiet --notest Date::Calc \
+    && cpanm --sudo --quiet --notest LWP::Authen::OAuth2 \
+    && cpanm --sudo --quiet --notest App::cpanoutdated \
+    && cpan-outdated -p | cpanm --sudo --quiet --notest \
     && apt remove --purge -y \
             build-essential \
+            libdb-dev \
             libexpat1-dev \
             libssl-dev \
     && apt autoremove -y \
