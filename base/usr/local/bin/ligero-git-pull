@@ -1,1 +1,1 @@
-git pull --strategy-option=theirs --allow-unrelated-histories $@
+git pull --strategy-option=theirs --allow-unrelated-histories --no-edit $@
