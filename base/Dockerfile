@@ -155,7 +155,7 @@ RUN cd ${APP_DIR} \
     && git config core.fileMode false \
     && git config --global --add safe.directory /opt/otrs \
     && git config --global user.email ${APP_USER}@localhost \
-    && git config --global core.mergeoptions --strategy-option=theirs --allow-unrelated-histories --no-edit \
+    && git config --global core.mergeoptions "--strategy-option=theirs --allow-unrelated-histories --no-edit" \
     && git remote add origin ${CODE_REPOSITORY} \
     && git checkout -b main \
     && git pull origin ${RELEASE_TAG} \
