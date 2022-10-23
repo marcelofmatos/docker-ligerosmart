@@ -1,0 +1,4 @@
+#!/bin/bash
+LAST_VERSION=$(curl --silent "https://api.github.com/repos/LigeroSmart/ligerosmart/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")')
+git pull --strategy-option=theirs --allow-unrelated-histories --no-edit origin $LAST_VERSION
+[[ $? -eq 0 ]] && otrs.Console.pl Maint::Database::Migration::Apply
