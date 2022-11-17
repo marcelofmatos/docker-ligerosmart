@@ -70,6 +70,7 @@ RUN apt-get update \
         libdbd-pg-perl \
         libdbi-perl \
         libencode-hanextra-perl \
+        libgd-barcode-perl \
         libgraphviz-perl \
         libio-socket-ssl-perl \
         libjson-xs-perl \
