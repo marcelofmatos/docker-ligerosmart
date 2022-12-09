@@ -79,6 +79,10 @@ if [ $? -eq 0 ]; then
     git branch -m master main > /dev/null
 fi;
 
+# sync ACL and Process
+[[ -f Kernel/System/Console/Command/Maint/Deploy/ACL.pm ]] && otrs.Console.pl Maint::Deploy::ACL
+[[ -f Kernel/System/Console/Command/Maint/Deploy/Process.pm ]] && otrs.Console.pl Maint::Deploy::Process
+
 echo "100" > $PROGRESSBAR_FILE
 
 # stop init-screen
