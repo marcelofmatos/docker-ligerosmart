@@ -80,8 +80,8 @@ if [ $? -eq 0 ]; then
 fi;
 
 # sync ACL and Process
-[[ -f Kernel/System/Console/Command/Maint/Deploy/ACL.pm ]] && otrs.Console.pl Maint::Deploy::ACL
-[[ -f Kernel/System/Console/Command/Maint/Deploy/Process.pm ]] && otrs.Console.pl Maint::Deploy::Process
+[[ -f Kernel/System/Console/Command/Maint/Deploy/ACL.pm ]] && su -c "otrs.Console.pl Maint::Deploy::ACL" -s /bin/bash $APP_USER
+[[ -f Kernel/System/Console/Command/Maint/Deploy/Process.pm ]] && su -c "otrs.Console.pl Maint::Deploy::Process" -s /bin/bash $APP_USER
 
 echo "100" > $PROGRESSBAR_FILE
 
