@@ -3,6 +3,13 @@
 # elasticsearch integration
 # Change WebService destination
 
+curl -X PUT "${APP_LigeroSmart_Node}:9200/_cluster/settings?flat_settings=true&pretty" -H 'Content-Type: application/json' -d'
+{
+    "transient" : {
+        "logger.org.elasticsearch.deprecation": "ERROR"
+    }
+}'
+
 cat >/tmp/elasticsearch-config.yml <<EOF
 ---
 - ${APP_LigeroSmart_Node}:9200
