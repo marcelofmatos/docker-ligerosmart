@@ -8,7 +8,7 @@ curl -X PUT "${APP_LigeroSmart_Node}:9200/_cluster/settings?flat_settings=true&p
     "transient" : {
         "logger.org.elasticsearch.deprecation": "ERROR"
     }
-}'
+}' > /dev/null
 
 cat >/tmp/elasticsearch-config.yml <<EOF
 ---
