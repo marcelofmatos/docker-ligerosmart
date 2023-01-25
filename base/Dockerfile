@@ -122,6 +122,8 @@ RUN apt update \
             libexpat1-dev \
             libssl-dev \
     && curl --silent -L https://cpanmin.us | perl - --sudo App::cpanminus \
+    && cpanm --sudo --quiet --notest App::cpanoutdated \
+    && cpan-outdated -p | cpanm --sudo --quiet --notest \
     && cpanm --sudo --quiet --notest Cache::Memcached::Fast \
     && cpanm --sudo --quiet --notest DateTime::TimeZone \
     && cpanm --sudo --quiet --notest HTTP::Server::Brick \
@@ -135,8 +137,6 @@ RUN apt update \
     && cpanm --sudo --quiet --notest Redis::Fast \
     && cpanm --sudo --quiet --notest Date::Calc \
     && cpanm --sudo --quiet --notest LWP::Authen::OAuth2 \
-    && cpanm --sudo --quiet --notest App::cpanoutdated \
-    && cpan-outdated -p | cpanm --sudo --quiet --notest \
     && apt remove --purge -y \
             build-essential \
             libdb-dev \
