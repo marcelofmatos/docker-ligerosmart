@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-ENV RELEASE_TAG=6.1.17 \
+ENV RELEASE_TAG=6.1.18 \
     CODE_REPOSITORY="https://github.com/LigeroSmart/ligerosmart" \
     DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \
@@ -72,6 +72,7 @@ RUN apt-get update \
         libdbd-pg-perl \
         libdbi-perl \
         libencode-hanextra-perl \
+        libgd-barcode-perl \
         libgraphviz-perl \
         libio-socket-ssl-perl \
         libjson-xs-perl \
