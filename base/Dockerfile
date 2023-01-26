@@ -56,6 +56,7 @@ RUN apt-get update \
         git-core \
         graphviz \
         jq \
+        mariadb-client \
         libaio1 \
         libarchive-zip-perl \
         libauthen-ntlm-perl \
@@ -65,6 +66,7 @@ RUN apt-get update \
         libcrypt-ssleay-perl \
         libdate-pcalc-perl \
         libdatetime-perl \
+        libdbd-mariadb-perl \
         libdbd-mysql-perl \
         libdbd-odbc-perl \
         libdbd-pg-perl \
@@ -102,17 +104,11 @@ RUN apt-get update \
         vim \
         xterm \
         zip \
-    && apt autoremove \
+    && apt autoremove -y mysql-common \
+    && apt autoremove -y \
     && apt-get clean \
     && apt-get --purge remove sendmail-base sendmail-cf sendmail-doc -y \
     && rm -rf /var/lib/apt/lists/* 
-
-# MySQL client v5.7
-RUN curl -sLO https://downloads.mysql.com/archives/get/p/23/file/mysql-client_5.7.34-1ubuntu18.04_amd64.deb \
-    && curl -sLO https://downloads.mysql.com/archives/get/p/23/file/mysql-community-client_5.7.34-1ubuntu18.04_amd64.deb \
-    && dpkg -i mysql-community-client_5.7.34-1ubuntu18.04_amd64.deb \
-    && dpkg -i mysql-client_5.7.34-1ubuntu18.04_amd64.deb \
-    && rm *.deb
 
 # Extra perl modules
 RUN apt update \
@@ -120,6 +116,7 @@ RUN apt update \
             build-essential \
             libdb-dev \
             libexpat1-dev \
+            libmariadb-dev \
             libssl-dev \
     && curl --silent -L https://cpanmin.us | perl - --sudo App::cpanminus \
     && cpanm --sudo --quiet --notest App::cpanoutdated \
@@ -137,12 +134,16 @@ RUN apt update \
     && cpanm --sudo --quiet --notest Redis::Fast \
     && cpanm --sudo --quiet --notest Date::Calc \
     && cpanm --sudo --quiet --notest LWP::Authen::OAuth2 \
+    && cpanm --sudo --quiet --notest Apache::DBI \
+    && cpanm --sudo --quiet --notest DBD::MariaDB \
     && apt remove --purge -y \
             build-essential \
             libdb-dev \
             libexpat1-dev \
+            libmariadb-dev \
             libssl-dev \
     && apt autoremove -y \
+    && apt install libmariadb3 libdbd-mysql-perl -y \
     && apt clean \
     && rm -rf /var/lib/apt/lists/* 
 
