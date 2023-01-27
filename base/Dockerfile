@@ -56,7 +56,6 @@ RUN apt-get update \
         git-core \
         graphviz \
         jq \
-        mariadb-client \
         libaio1 \
         libarchive-zip-perl \
         libauthen-ntlm-perl \
@@ -143,7 +142,7 @@ RUN apt update \
             libmariadb-dev \
             libssl-dev \
     && apt autoremove -y \
-    && apt install libmariadb3 libdbd-mysql-perl -y \
+    && apt install mariadb-client libmariadb3 libdbd-mysql-perl -y \
     && apt clean \
     && rm -rf /var/lib/apt/lists/* 
 
