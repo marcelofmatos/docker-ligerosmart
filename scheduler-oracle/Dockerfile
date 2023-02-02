@@ -15,10 +15,11 @@ RUN sudo apt-get update \
     && dpkg -i oracle-instantclient12.1-devel_12.1.0.2.0-2_amd64.deb \
     && dpkg -i oracle-instantclient12.1-sqlplus_12.1.0.2.0-2_amd64.deb \
     && rm -rf /tmp/*.deb \
-    && cpanm --notest DBD::Oracle \
+    && cpanm --sudo --quiet --notest DBD::Oracle \
     && apt remove build-essential -y \
     && apt autoremove -y \
-    && rm -rf /var/lib/apt/lists/*  
+    && rm -rf /var/lib/apt/lists/*  \
+    && rm -rf /root/.cpanm/
 
 CMD /app-run-oracle-support.sh
 

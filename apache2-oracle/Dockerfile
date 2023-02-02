@@ -19,7 +19,8 @@ RUN sudo apt-get update \
     && cpanm --sudo --quiet --notest ModPerl::Util \
     && apt remove build-essential -y \
     && apt autoremove -y \
-    && rm -rf /var/lib/apt/lists/* 
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /root/.cpanm/
 
 CMD /app-run-oracle-support.sh
 

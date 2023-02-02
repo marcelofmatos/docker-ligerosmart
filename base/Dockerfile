@@ -144,7 +144,8 @@ RUN apt update \
     && apt autoremove -y \
     && apt install mariadb-client libmariadb3 libdbd-mysql-perl -y \
     && apt clean \
-    && rm -rf /var/lib/apt/lists/* 
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /root/.cpanm/
 
 RUN mkdir ${APP_DIR} /app-backups 
 

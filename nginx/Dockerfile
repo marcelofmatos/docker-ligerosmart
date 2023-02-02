@@ -20,7 +20,8 @@ RUN apt update \
             libssl-dev \
     && apt autoremove -y \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* 
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /root/.cpanm/
 
 # include files
 COPY etc /etc

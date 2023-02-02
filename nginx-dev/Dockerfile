@@ -18,7 +18,8 @@ RUN apt update \
 RUN cpanm --sudo --quiet --notest \
         Starman \
         Devel::NYTProf \
-        Perl::LanguageServer
+        Perl::LanguageServer \
+    && rm -rf /root/.cpanm/
 
 # include files
 COPY etc /etc

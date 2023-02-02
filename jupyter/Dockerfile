@@ -17,7 +17,8 @@ RUN apt update \
     && apt remove --purge build-essential -y \
     && apt autoremove -y \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* 
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /root/.cpanm/
 
 COPY --chown=otrs:www-data jupyter-notebooks/ /jupyter-notebooks/
 COPY etc/ /etc/
