@@ -44,6 +44,7 @@ COPY app-init.d/* /app-init.d/
 COPY app-packages/* /app-packages/
 COPY app-init.sh /app-init.sh
 COPY app-run.sh /app-run.sh
+COPY app-scheduler.sh /app-scheduler.sh
 
 # Packages
 RUN apt-get update \
