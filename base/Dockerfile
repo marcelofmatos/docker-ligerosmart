@@ -55,6 +55,7 @@ RUN apt-get update \
         dialog \
         gettext \
         git-core \
+        gnupg \
         graphviz \
         jq \
         libaio1 \
