@@ -19,7 +19,7 @@ RUN apt update \
 COPY etc /etc
 
 # nginx repository key
-RUN wget -q http://nginx.org/keys/nginx_signing.key -O- | apt-key add -
+RUN curl -L http://nginx.org/keys/nginx_signing.key > /tmp/nginx_signing.key && apt-key add /tmp/nginx_signing.key
 
 # Packages
 RUN apt-get update \
