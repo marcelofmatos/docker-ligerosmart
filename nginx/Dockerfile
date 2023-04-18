@@ -1,13 +1,5 @@
 FROM ligero/ligerosmart:base
 
-
-# Packages
-RUN apt-get update \
-    && apt-get install -y \
-        nginx \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*  
-
 # Extra perl modules
 RUN apt update \
     && apt install -y \
@@ -23,8 +15,20 @@ RUN apt update \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /root/.cpanm/
 
-# include files
+# include config files
 COPY etc /etc
+
+# nginx repository key
+RUN wget -q http://nginx.org/keys/nginx_signing.key -O- | apt-key add -
+
+# Packages
+RUN apt-get update \
+    && apt-get install -y \
+        nginx \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*  
+
+# include files
 COPY var /var
 COPY app.psgi /
 COPY app-healthcheck.sh /app-healthcheck.sh
