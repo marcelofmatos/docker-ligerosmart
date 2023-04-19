@@ -24,7 +24,8 @@ RUN curl -L http://nginx.org/keys/nginx_signing.key > /tmp/nginx_signing.key && 
 # Packages
 RUN apt-get update \
     && apt-get install -y \
-        nginx \
+        nginx=1.18.* \
+    && apt-mark hold nginx=1.18.* \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*  
 
