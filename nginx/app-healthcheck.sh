@@ -22,8 +22,8 @@ fi
 
 # WEBSERVER test
 if [ "$START_WEBSERVER" == "1" ]; then
-    touch $HEARTBEAT_FILE
     curl -m 50 -f -s http://localhost/otrs/index.pl?healthcheck -o /dev/null || exit 1
+    touch $HEARTBEAT_FILE
 fi;
 
 # SCHEDULER test
