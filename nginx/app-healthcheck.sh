@@ -27,7 +27,7 @@ if [ "$START_WEBSERVER" == "1" ]; then
 fi;
 
 # SCHEDULER test
-#if [ "$START_BACKEND" == "1" ]; then 
+#if [ "$START_SCHEDULER" == "1" ]; then 
 #    # TODO
 #fi;
 
