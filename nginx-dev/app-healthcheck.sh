@@ -2,11 +2,11 @@
 #set -x
 HEARTBEAT_FILE=/tmp/healthcheck_on
 
-if [ $(pgrep httpserver.pl) ]; then
+if [ "$(pgrep httpserver.pl)" ]; then
   exit 0
 fi
 
-if [ -z $(pgrep starman) ]; then
+if [ -z "$(pgrep starman)" ]; then
   exit 0
 fi
 
