@@ -33,3 +33,11 @@ alias ll="ls -la"
 
 # Print my public IP
 alias mypublicip='curl ipinfo.io'
+
+alias cpanm="cpanm --quiet --notest"
+
+alias ligero-console='otrs.Console.pl'
+alias ligero-daemon-summary='otrs.Console.pl Maint::Daemon::Summary'
+alias ligero-email-mailqueue='otrs.Console.pl Maint::Email::MailQueue'
+alias ligero-config-rebuild='otrs.Console.pl Maint::Config::Rebuild'
+
