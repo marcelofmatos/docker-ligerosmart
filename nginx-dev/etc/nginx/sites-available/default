@@ -33,7 +33,7 @@ server {
                 proxy_pass http://127.0.0.1:9000/otrs/nph-genericinterface.pl/Webservice/;
         }
         
-        location ~ ^/(otrs/|ligerosmart/|servicedesk/)(.+\.pl)? {
+        location ~ ^/(otrs|ligerosmart|servicedesk)/(.+\.pl)? {
                 # skip healthcheck access
                 if ( $remote_addr = '127.0.0.1' ) {
                         access_log off;
