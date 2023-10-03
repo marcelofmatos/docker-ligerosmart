@@ -18,17 +18,7 @@ server {
         root /var/www/html;
         index index.pl index.html;
 
-        location /otrs-web/ {
-                gzip on;
-                alias /opt/otrs/var/httpd/htdocs/;
-        }
-
-        location /ligerosmart-web/ {
-                gzip on;
-                alias /opt/otrs/var/httpd/htdocs/;
-        }
-
-        location /servicedesk-web/ {
+        location ~ ^/(otrs-web|ligerosmart-web|servicedesk-web)/ {
                 gzip on;
                 alias /opt/otrs/var/httpd/htdocs/;
         }
