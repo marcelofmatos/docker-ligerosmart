@@ -18,11 +18,21 @@ server {
         root /var/www/html;
         index index.pl index.html;
 
-        location ~ ^/(otrs-web|ligerosmart-web|servicedesk-web)/ {
+        location /otrs-web/ {
                 gzip on;
                 alias /opt/otrs/var/httpd/htdocs/;
         }
-        
+
+        location /ligerosmart-web/ {
+                gzip on;
+                alias /opt/otrs/var/httpd/htdocs/;
+        }
+
+        location /servicedesk-web/ {
+                gzip on;
+                alias /opt/otrs/var/httpd/htdocs/;
+        }
+
         # api preffix route
         location /api/ {
                 # skip healthcheck access
