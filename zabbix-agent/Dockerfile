@@ -4,7 +4,7 @@ USER root
 
 RUN apk add mysql-client postgresql-client
 
-COPY etc /etc
+COPY --chown=zabbix:zabbix etc /etc
 
 COPY healthcheck.sh /healthcheck.sh
 
