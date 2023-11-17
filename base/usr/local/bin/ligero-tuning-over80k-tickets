@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# LigeroSmart Tuning Config
+# ref.: https://otrscommunityedition.com/doc/manual/admin/6.0/en/html/performance-tuning.html#id-1.9.3.6
+#
+
+# IndexModule
+otrs.Console.pl Admin::Config::Update --setting-name 'Ticket::IndexModule' --value 'Kernel::System::Ticket::IndexAccelerator::StaticDB' --no-deploy
+otrs.Console.pl Maint::Config::Rebuild
+
+# Queue Reindex
+otrs.Console.pl Maint::Ticket::QueueIndexRebuild
+
+# Archive System
+otrs.Console.pl Admin::Config::Update --setting-name 'Ticket::ArchiveSystem' --value '1' --no-deploy
+otrs.Console.pl Maint::Config::Rebuild
+
