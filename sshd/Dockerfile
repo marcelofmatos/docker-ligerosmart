@@ -4,6 +4,11 @@ FROM ligero/ligerosmart:base
 RUN apt-get update \
     && apt-get install -y \
         ssh \
+        ncdu \
+        htop \
+        mtr \
+        iputils-ping \
+        nmap \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* 
 
