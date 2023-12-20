@@ -3,12 +3,13 @@ FROM ligero/ligerosmart:base
 # Packages
 RUN apt-get update \
     && apt-get install -y \
-        ssh \
-        ncdu \
         htop \
-        mtr \
         iputils-ping \
+        ldap-utils \
+        mtr \
+        ncdu \
         nmap \
+        ssh \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* 
 
