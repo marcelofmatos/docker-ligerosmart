@@ -25,7 +25,6 @@ cron_folder=/opt/otrs/var/cron
 cron_check_interval=$((HEARTBEAT_INTERVAL * 2))
 modified_files=$(find "$cron_folder" -type f -mmin -$cron_check_interval)
 if [ -n "$modified_files" ]; then
-  touch $HEARTBEAT_FILE
   exit 1
 fi
 
