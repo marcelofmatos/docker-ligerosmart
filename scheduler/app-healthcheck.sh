@@ -20,6 +20,15 @@ if [ "$START_SCHEDULER" == "1" ]; then
   fi
 fi;
 
+# CRON config test
+cron_folder=/opt/otrs/var/cron
+cron_time_interval=$((HEARTBEAT_INTERVAL * 60))
+modified_files=$(find "$cron_folder" -type f -mmin -$cron_time_interval)
+if [ -n "$modified_files" ]; then
+  touch $HEARTBEAT_FILE
+  exit 1
+fi
+
 touch $HEARTBEAT_FILE
 
 
