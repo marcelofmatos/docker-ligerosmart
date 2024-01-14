@@ -19,12 +19,13 @@ fi
 
 # WEBSERVER test
 if [ "$START_WEBSERVER" == "1" ]; then
-    curl -m 50 -f -s http://127.0.0.1/otrs/index.pl?healthcheck -o /dev/null || exit 1
+    curl -m 50 -f -s http://127.0.0.1/otrs/index.pl?healthcheck -o /dev/null || echo "$0: webserver is not responding" && exit 1
 fi;
 
 # SCHEDULER test
 if [ "$START_SCHEDULER" == "1" ]; then 
   if [ -z "$(pgrep -f otrs.Daemon.pl)" ]; then
+    echo "$0: otrs.Daemon.pl is not running"
     exit 1
   fi
 fi;
