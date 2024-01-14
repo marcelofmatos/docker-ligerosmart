@@ -16,6 +16,7 @@ fi
 # SCHEDULER test
 if [ "$START_SCHEDULER" == "1" ]; then 
   if [ -z "$(pgrep -f otrs.Daemon.pl)" ]; then
+    echo "$0: otrs.Daemon.pl is not running"
     exit 1
   fi
 fi;
@@ -25,6 +26,7 @@ cron_folder=/opt/otrs/var/cron
 cron_check_interval=$((HEARTBEAT_INTERVAL * 2))
 modified_files=$(find "$cron_folder" -type f -mmin -$cron_check_interval)
 if [ -n "$modified_files" ]; then
+  echo "$0: cron changed: $modified_files"
   exit 1
 fi
 
