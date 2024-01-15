@@ -19,7 +19,7 @@ fi
 
 # WEBSERVER test
 if [ "$START_WEBSERVER" == "1" ]; then
-    curl -m 50 -f -s http://127.0.0.1/otrs/index.pl?healthcheck -o /dev/null || echo "$0: webserver is not responding" && exit 1
+    curl -m 50 -f -s http://127.0.0.1/otrs/index.pl?healthcheck -o /dev/null || exit 1
 fi;
 
 # SCHEDULER test
