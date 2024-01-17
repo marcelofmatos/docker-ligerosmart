@@ -57,7 +57,7 @@ _console_complete()
     if [ ! -f /tmp/_console_complete ]; then
       /opt/otrs/bin/otrs.Console.pl | cut -f 2 -d ' ' > /tmp/_console_complete
     fi;
-    COMPREPLY=( $(cat /tmp/_console_complete | egrep --ignore-case "$cur") )
+    COMPREPLY=( $(cat /tmp/_console_complete | egrep --ignore-case "^$cur") )
 }
 complete -f -d -F _console_complete otrs.Console.pl
 
