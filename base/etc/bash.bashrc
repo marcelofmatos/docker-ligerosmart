@@ -55,7 +55,7 @@ _console_complete()
 {
     local cur=${COMP_WORDS[COMP_CWORD]}
     if [ ! -f /tmp/_console_complete ]; then
-      /opt/otrs/bin/otrs.Console.pl | cut -f 2 -d ' ' > /tmp/_console_complete
+      /opt/otrs/bin/otrs.Console.pl | tr -d "[]" | grep '\- ' | cut -f 2 -d ' ' > /tmp/_console_complete
     fi;
     COMPREPLY=( $(cat /tmp/_console_complete | egrep --ignore-case "^$cur") )
 }
