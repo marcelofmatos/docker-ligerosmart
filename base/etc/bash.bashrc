@@ -42,6 +42,15 @@ alias ligero-email-mailqueue='otrs.Console.pl Maint::Email::MailQueue'
 alias ligero-config-rebuild='otrs.Console.pl Maint::Config::Rebuild'
 alias apt-install='sudo apt update && sudo apt install -y'
 
+# Get path to current file, follow symlinks
+THIS_FILE=$BASH_SOURCE
+if [ -L $THIS_FILE ]; then
+    THIS_FILE=`readlink $THIS_FILE`;
+fi
+
+# Remove : from wordbreak delimiter because OTRS uses it in the command names
+COMP_WORDBREAKS=${COMP_WORDBREAKS//:/}
+
 _console_complete()
 {
     local cur=${COMP_WORDS[COMP_CWORD]}
