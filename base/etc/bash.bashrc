@@ -57,7 +57,7 @@ _console_complete()
     local cur=${COMP_WORDS[COMP_CWORD]}
     local prev="${COMP_WORDS[COMP_CWORD-1]}"
     if [ ! -f /tmp/_console_complete ]; then
-        otrs.Console.pl | tr -d "[]" | grep '\- ' | cut -f 2 -d ' ' > /tmp/_console_complete
+        otrs.Console.pl 2> /dev/null | tr -d "[]" | grep '\- ' | cut -f 2 -d ' ' > /tmp/_console_complete
     fi;
     
     if [ "$2" = '--' ]; then
