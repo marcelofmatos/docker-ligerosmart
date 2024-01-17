@@ -42,3 +42,6 @@ alias ligero-email-mailqueue='otrs.Console.pl Maint::Email::MailQueue'
 alias ligero-config-rebuild='otrs.Console.pl Maint::Config::Rebuild'
 alias apt-install='sudo apt update && sudo apt install -y'
 
+complete -f -d -C "/opt/otrs/bin/otrs.Console.pl" otrs.Console.pl
+
+bind 'set completion-ignore-case on'
