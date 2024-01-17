@@ -59,6 +59,8 @@ _console_complete()
     fi;
     COMPREPLY=( $(cat /tmp/_console_complete | egrep --ignore-case "^$cur") )
 }
+
+complete -f -d -F _console_complete ligero-console
 complete -f -d -F _console_complete otrs.Console.pl
 
 bind 'set completion-ignore-case on'
