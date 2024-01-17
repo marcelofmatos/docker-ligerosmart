@@ -53,11 +53,24 @@ COMP_WORDBREAKS=${COMP_WORDBREAKS//:/}
 
 _console_complete()
 {
+
     local cur=${COMP_WORDS[COMP_CWORD]}
+    local prev="${COMP_WORDS[COMP_CWORD-1]}"
     if [ ! -f /tmp/_console_complete ]; then
-      /opt/otrs/bin/otrs.Console.pl | tr -d "[]" | grep '\- ' | cut -f 2 -d ' ' > /tmp/_console_complete
+        otrs.Console.pl | tr -d "[]" | grep '\- ' | cut -f 2 -d ' ' > /tmp/_console_complete
     fi;
+    
+    if [ -z "$2" ]; then
+        otrs.Console.pl ${COMP_WORDS[1]} --help
+    fi;
+    
+    if [ "$prev" != "otrs.Console.pl" ]; then
+        COMPREPLY=( $(otrs.Console.pl ${COMP_WORDS[1]} --help | tr -d "[]"  | grep '\- ' | cut -f 2 -d ' ' | egrep --ignore-case "^$cur") )
+        return 0
+    fi;
+    
     COMPREPLY=( $(cat /tmp/_console_complete | egrep --ignore-case "^$cur") )
+    
 }
 
 complete -f -d -F _console_complete ligero-console
