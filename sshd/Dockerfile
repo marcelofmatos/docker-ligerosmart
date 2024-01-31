@@ -10,6 +10,7 @@ RUN apt-get update \
         ncdu \
         nmap \
         ssh \
+        screen \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* 
 
