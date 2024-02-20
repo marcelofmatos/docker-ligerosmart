@@ -182,7 +182,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     && rm -rf aws/ awscliv2.zip
 
 # gosendmail
-FROM fasibio/docker-gosendmail:latest AS gosendmail-img
-COPY --from=gosendmail-img /bin/gosendmail /usr/bin/sendmail
+FROM fasibio/docker-gosendmail:latest AS gosendmail
+COPY --from=gosendmail /bin/gosendmail /usr/bin/sendmail
 
 CMD /app-run.sh
