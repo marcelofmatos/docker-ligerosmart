@@ -187,6 +187,6 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     && sudo ./aws/install \
     && rm -rf aws/ awscliv2.zip
 
-COPY --from=gosendmail /bin/gosendmail /usr/bin/sendmail
+COPY --from=gosendmail /bin/gosendmail /usr/sbin/sendmail
 
 CMD /app-run.sh
