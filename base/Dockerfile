@@ -1,4 +1,6 @@
-FROM ubuntu:20.04
+FROM fasibio/docker-gosendmail:latest AS gosendmail
+
+FROM ubuntu:20.04 AS base
 
 ENV RELEASE_TAG=6.1.20 \
     CODE_REPOSITORY="https://github.com/LigeroSmart/ligerosmart" \
@@ -181,8 +183,6 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     && sudo ./aws/install \
     && rm -rf aws/ awscliv2.zip
 
-# gosendmail
-FROM fasibio/docker-gosendmail:latest AS gosendmail
 COPY --from=gosendmail /bin/gosendmail /usr/bin/sendmail
 
 CMD /app-run.sh
