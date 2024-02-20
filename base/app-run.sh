@@ -15,6 +15,10 @@ export START_SSHD=${START_SSHD:-0}
 export DEBUG_MODE=${DEBUG_MODE:-0}
 export RESTORE_DIR=${RESTORE_DIR:-"/app-backups/restore"}
 export APP_USER=${APP_USER:-otrs}
+export SMTPSERVER=${SMTPSERVER:-mail}
+export SMTPPORT=${SMTPPORT:-25}
+export EMAIL=${EMAIL:-"otrs@localhost"}
+export EMAILPASSWORD=${EMAILPASSWORD:-"passw0rd"}
 
 # legacy variables
 [ "$START_FRONTEND" == "1" ] && export START_WEBSERVER=1

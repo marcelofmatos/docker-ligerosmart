@@ -17,6 +17,8 @@ ENV RELEASE_TAG=6.1.20 \
     START_WEBSERVER=0 \
     SMTPSERVER=mail \
     SMTPPORT=25 \
+    EMAIL=otrs@localhost \
+    EMAILPASSWORD=passw0rd \
     DEBUG_MODE=0 
 
 ENV PATH=${APP_DIR}/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
