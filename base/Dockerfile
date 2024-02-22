@@ -129,6 +129,7 @@ RUN apt update \
     && cpanm --sudo --quiet --notest App::cpanoutdated \
     && cpan-outdated -p | cpanm --sudo --quiet --notest \
     && cpanm --sudo --quiet --notest Cache::Memcached::Fast \
+    && cpanm --sudo --quiet --notest Cache::Redis \
     && cpanm --sudo --quiet --notest DateTime::TimeZone \
     && cpanm --sudo --quiet --notest HTTP::Server::Brick \
     && cpanm --sudo --quiet --notest JSON::Path \
