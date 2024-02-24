@@ -4,7 +4,7 @@ FROM ubuntu:20.04 AS base
 
 ARG RELEASE_TAG
 
-ENV RELEASE_TAG =$RELEASE_TAG 
+ENV RELEASE_TAG $RELEASE_TAG 
 
 ENV CODE_REPOSITORY="https://github.com/LigeroSmart/ligerosmart" \
     DEBIAN_FRONTEND=noninteractive \
