@@ -2,8 +2,11 @@ FROM fasibio/docker-gosendmail:latest AS gosendmail
 
 FROM ubuntu:20.04 AS base
 
-ENV RELEASE_TAG=6.1.20 \
-    CODE_REPOSITORY="https://github.com/LigeroSmart/ligerosmart" \
+ARG RELEASE_TAG
+
+ENV RELEASE_TAG =$RELEASE_TAG 
+
+ENV CODE_REPOSITORY="https://github.com/LigeroSmart/ligerosmart" \
     DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US:en \
