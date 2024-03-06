@@ -65,11 +65,11 @@ _console_complete()
     fi;
     
     if [ "$prev" != "otrs.Console.pl" ]; then
-        COMPREPLY=( $(otrs.Console.pl ${COMP_WORDS[1]} --help 2> /dev/null | tr -d "[]"  | grep '\- ' | cut -f 2 -d ' ' | egrep --ignore-case "^$cur") )
+        COMPREPLY=( $(otrs.Console.pl ${COMP_WORDS[1]} --help 2> /dev/null | tr -d "[]"  | grep '\- ' | cut -f 2 -d ' ' | egrep --ignore-case "$cur") )
         return 0
     fi;
     
-    COMPREPLY=( $(cat /tmp/_console_complete | egrep --ignore-case "^$cur") )
+    COMPREPLY=( $(cat /tmp/_console_complete | egrep --ignore-case "$cur") )
     
 }
 
