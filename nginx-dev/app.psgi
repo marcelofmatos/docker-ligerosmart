@@ -120,7 +120,7 @@ my $StaticPath = sub {
 builder {
     # enable "StackTrace", force => $ENV{DEBUG_MODE};
     # enable "Devel::StackTrace", force => $ENV{DEBUG_MODE};
-    enable "StackTrace", force => $ENV{DEBUG_MODE}, unsafe_ref_capture => $ENV{DEBUG_MODE};
+    enable_if { $ENV{DEBUG_MODE} == 1 } "StackTrace", unsafe_ref_capture => 1;
     enable "Static",
         path        => $StaticPath,
         root        => "$Bin/../../var/httpd/htdocs",
