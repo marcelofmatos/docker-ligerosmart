@@ -119,9 +119,8 @@ my $StaticPath = sub {
 #   application handler.
 builder {
     # enable "StackTrace", force => $ENV{DEBUG_MODE};
-    # enable "Devel::StackTrace", force => $ENV{DEBUG_MODE};
-    if ($ENV{DEBUG_MODE} == 1) {
-        enable "StackTrace", unsafe_ref_capture => 1;
+    if ($ENV{DEBUG_MODE} eq "1") {
+        enable "StackTrace", force => 1;
     }
     enable "Static",
         path        => $StaticPath,

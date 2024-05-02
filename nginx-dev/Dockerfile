@@ -31,6 +31,8 @@ COPY app-init.d /app-init.d
 COPY app-dev-run.sh /app-dev-run.sh
 COPY app-healthcheck.sh /app-healthcheck.sh
 
+# patches
+RUN /var/patches/apply.sh
 
 # post configuration
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \

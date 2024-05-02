@@ -34,6 +34,9 @@ COPY var /var
 COPY app.psgi /
 COPY app-healthcheck.sh /app-healthcheck.sh
 
+# patches
+RUN /var/patches/apply.sh
+
 # post configuration
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log \

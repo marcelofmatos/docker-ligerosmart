@@ -118,7 +118,10 @@ my $StaticPath = sub {
 # Create a Static middleware to serve static files directly without invoking the OTRS
 #   application handler.
 builder {
-    enable "StackTrace", force => $ENV{DEBUG_MODE};
+    # enable "StackTrace", force => $ENV{DEBUG_MODE};
+    if ($ENV{DEBUG_MODE} eq "1") {
+        enable "StackTrace", force => 1;
+    }
     enable "Static",
         path        => $StaticPath,
         root        => "$Bin/../../var/httpd/htdocs",
