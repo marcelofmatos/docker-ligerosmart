@@ -19,6 +19,8 @@ RUN cpanm --sudo --quiet --notest \
         Starman \
         Devel::NYTProf \
         Perl::LanguageServer \
+        Devel::StackTrace::WithLexicals \
+        PadWalker \
     && rm -rf /root/.cpanm/
 
 # include files
