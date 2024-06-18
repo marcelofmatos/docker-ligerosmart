@@ -126,6 +126,11 @@ builder {
         path        => $StaticPath,
         root        => "$Bin/../../var/httpd/htdocs",
         pass_trough => 0;
+    enable "Cache",
+        match_url => [
+            'Action=CustomerDFFileAttachment',
+        ],
+        cache_dir => '/tmp/plack-cache';
     enable "Plack::Middleware::ErrorDocument",
         403 => '/var/www/html/403.html',
         500 => '/var/www/html/50x.html',
