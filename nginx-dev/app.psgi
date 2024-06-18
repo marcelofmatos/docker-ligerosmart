@@ -130,7 +130,8 @@ builder {
         match_url => [
             'Action=CustomerDFFileAttachment',
         ],
-        cache_dir => '/tmp/plack-cache';
+        cache_dir => '/tmp/plack-cache',
+        debug => 1;
     enable "Plack::Middleware::ErrorDocument",
         403 => '/var/www/html/403.html',
         500 => '/var/www/html/50x.html',
