@@ -39,6 +39,7 @@ use CGI;
 use CGI::Emulate::PSGI;
 use Module::Refresh;
 use Plack::Builder;
+use Plack::Request;
 
 # Workaround: some parts of OTRS use exit to interrupt the control flow.
 #   This would kill the Plack server, so just use die instead.
