@@ -21,6 +21,7 @@ RUN cpanm --sudo --quiet --notest \
         Perl::LanguageServer \
         Devel::StackTrace::WithLexicals \
         PadWalker \
+        Plack::Middleware::Cache \
     && rm -rf /root/.cpanm/
 
 # include files
