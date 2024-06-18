@@ -22,6 +22,7 @@ RUN cpanm --sudo --quiet --notest \
         Devel::StackTrace::WithLexicals \
         PadWalker \
         Plack::Middleware::Cache \
+        Plack::Middleware::Expires \
     && rm -rf /root/.cpanm/
 
 # include files

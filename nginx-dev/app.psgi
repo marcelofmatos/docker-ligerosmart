@@ -127,6 +127,9 @@ builder {
         path        => $StaticPath,
         root        => "$Bin/../../var/httpd/htdocs",
         pass_trough => 0;
+    enable 'Expires',
+      content_type => [ 'text/css', 'application/javascript', qr!^image/! ],
+      expires => 'access plus 7 days';
     enable "Plack::Middleware::ErrorDocument",
         403 => '/var/www/html/403.html',
         500 => '/var/www/html/50x.html',
