@@ -15,6 +15,9 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* 
 
+RUN wget http://mysqltuner.pl/ -O /usr/local/bin/mysqltuner.pl \
+    && chmod +x /usr/local/bin/mysqltuner.pl 
+
 # include files
 COPY etc /etc
 
