@@ -15,7 +15,7 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* 
 
-RUN curl http://mysqltuner.pl/ > /usr/local/bin/mysqltuner.pl \
+RUN curl -L https://mysqltuner.pl/ > /usr/local/bin/mysqltuner.pl \
     && chmod +x /usr/local/bin/mysqltuner.pl 
 
 # include files
