@@ -4,7 +4,8 @@ ENV ARCHFLAGS='-arch x86_64'
 
 RUN apt update \
     && apt install libzmq3-dev libcairo2-dev python3-pip build-essential -y \
-    && python3 -m pip install jupyter bash_kernel \
+    && python3 -m pip install --upgrade pip \
+    && python3 -m pip install --upgrade jupyter bash_kernel \
     && cpanm --quiet --notest --build-args 'OTHERLDFLAGS=' ZMQ::LibZMQ3 \
     && cpanm --quiet --notest \
         Devel::IPerl \
