@@ -148,6 +148,7 @@ RUN apt update \
     && cpanm --sudo --quiet --notest Apache::DBI \
     && cpanm --sudo --quiet --notest DBD::MariaDB \
     && cpanm --sudo --quiet --notest GraphViz \
+    && cpanm --sudo --quiet --notest Email::Valid \
     && apt remove --purge -y \
             build-essential \
             libdb-dev \
